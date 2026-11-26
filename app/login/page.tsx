@@ -26,7 +26,29 @@ export default function Login() {
 
       if (error) throw error;
 
-      router.push("/dashboard");
+      const { data: authData, error: userError } = await supabaseBrowser().auth.getUser();
+      if (userError || !authData.user) {
+        throw new Error("Não foi possível confirmar seu usuário.");
+      }
+
+      const { data: profile, error: profileError } = await supabaseBrowser()
+        .from("profiles")
+        .select("role, client_id")
+        .eq("id", authData.user.id)
+        .single();
+
+      if (profileError || !profile) {
+        throw new Error("Seu perfil ainda não está configurado. Entre em contato com a VYRA.");
+      }
+
+      if (profile.role === "admin") {
+        router.replace("/dashboard");
+      } else if (profile.role === "client" && profile.client_id) {
+        router.replace("/cliente");
+      } else {
+        throw new Error("Seu usuário não possui um acesso válido.");
+      }
+
       router.refresh();
     } catch (err) {
       setError(
