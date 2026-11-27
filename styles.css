@@ -542,7 +542,8 @@ button,input,textarea{font:inherit}
   height:100%;
   display:grid;
   place-items:center;
-  opacity:calc(.72 * (1 - var(--welcome-progress)));
+  opacity:calc(.576 * (1 - var(--welcome-progress)));
+  mix-blend-mode:screen;
   pointer-events:none;
   overflow:hidden;
 }
