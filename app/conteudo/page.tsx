@@ -204,7 +204,7 @@ export default function ContentPage() {
         <Link className="nav-entry" href="/dashboard"><span className="nav-number">01</span><span className="nav-name">Visão geral</span></Link>
         <Link className="nav-entry" href="/clientes"><span className="nav-number">02</span><span className="nav-name">Clientes</span></Link>
         <Link className="nav-entry selected" href="/conteudo"><span className="nav-number">03</span><span className="nav-name">Conteúdo</span><span className="nav-status">Ativo</span></Link>
-        {[[ "04", "Aprovações" ], [ "05", "Arquivos" ], [ "06", "Financeiro" ]].map(([number,label]) => <div className="nav-entry disabled" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Em breve</span></div>)}
+        <Link className="nav-entry" href="/aprovacoes"><span className="nav-number">04</span><span className="nav-name">Aprovações</span><span className="nav-status">Abrir</span></Link>{[[ "05", "Arquivos" ], [ "06", "Financeiro" ]].map(([number,label]) => <div className="nav-entry disabled" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Em breve</span></div>)}
       </nav>
       <div className="sidebar-signature"><span>✦</span><span>MENOS DO MESMO.<br/>MAIS IMPACTO.</span></div>
     </aside>
