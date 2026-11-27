@@ -163,46 +163,88 @@ export default function ClientHomePage() {
   }
 
   if (state === "loading") {
-    return <main className="app-shell"><p className="muted">Preparando seu espaço...</p></main>;
+    return <main className="client-brand-loading"><p>Preparando seu espaço...</p></main>;
   }
 
   if (state === "error") {
-    return <main className="app-shell"><div className="notice">{message}</div><button className="button" onClick={signOut}>Sair</button></main>;
+    return <main className="client-brand-loading"><div className="notice">{message}</div><button onClick={signOut}>Sair da conta</button></main>;
   }
 
   return (
-    <main className="app-shell client-home-shell" style={{ "--client-accent": client?.brand_color || "#A47376" } as React.CSSProperties}>
-      <header className="topbar client-home-topbar">
-        <div className="client-home-brand">{logoUrl ? <img src={logoUrl} alt={`Logo de ${client?.name}`} /> : <span>{client?.name}</span>}</div>
-        <button className="ghost" onClick={signOut}>Sair da conta</button>
+    <main
+      className="client-home-shell client-home-redesigned"
+      style={{ "--client-accent": client?.brand_color || "#B7A0A2" } as React.CSSProperties}
+    >
+      <header className="client-home-header">
+        <a className="client-home-identity" href="/cliente" aria-label="Página inicial da empresa">
+          {logoUrl ? <img src={logoUrl} alt={`Logo de ${client?.name}`} /> : <span>{client?.name}</span>}
+          <span className="client-home-identity-name">{client?.name}</span>
+        </a>
+        <button className="client-home-signout" onClick={signOut}>Sair da conta <span>↗</span></button>
       </header>
 
-      <section className="section">
-        {logoUrl ? (
-          <img src={logoUrl} alt={`Logo de ${client?.name ?? "sua empresa"}`} style={{ maxWidth: 180, maxHeight: 100, objectFit: "contain", marginBottom: 22 }} />
-        ) : (
-          <p className="eyebrow">ESPAÇO EXCLUSIVO DA EMPRESA</p>
-        )}
-        <h1>Bem-vindo(a), {client?.name}.</h1>
-        <p className="lead">{client?.welcome_message || "Este é o espaço da sua empresa na VYRA HUB. Aqui você poderá acompanhar seus conteúdos, projetos e materiais."}</p>
-        <div className="logo-upload">
-          <label htmlFor="company-logo">LOGO DA SUA EMPRESA</label>
-          <p>Envie uma imagem PNG, JPG ou WEBP de até 2 MB. Você poderá substituí-la quando quiser.</p>
-          <input id="company-logo" type="file" accept="image/png,image/jpeg,image/webp" onChange={uploadLogo} disabled={uploading} />
-          {uploading && <small>Enviando sua logo...</small>}
-          {uploadFeedback && <small role="status">{uploadFeedback}</small>}
-        </div>
-      </section>
+      <div className="client-home-content">
+        <section className="client-welcome-panel">
+          <div className="client-welcome-copy">
+            <p className="client-home-kicker">SEU ESPAÇO · SUA MARCA</p>
+            <h1>Bem-vindo(a),<br /><em>{client?.name}.</em></h1>
+            <p>{client?.welcome_message || "Este é o espaço exclusivo da sua empresa. Aqui você acompanha conteúdos, projetos, aprovações e materiais desenvolvidos para sua marca."}</p>
+          </div>
+          <div className="client-welcome-mark" aria-hidden="true">{logoUrl ? <img src={logoUrl} alt="" /> : <span>{client?.name?.slice(0, 1).toUpperCase()}</span>}</div>
+        </section>
 
-      <section className="section">
-        <h2>Seus próximos passos</h2>
-        <div className="client-grid">
-          <div className="client-card"><strong>Briefing</strong><span>Compartilhe informações importantes sobre sua marca.</span><small>Em preparação</small></div>
-          <a className="client-card client-calendar-link" href="/cliente/calendario"><strong>Calendário</strong><span>Acompanhe as publicações, visualize fotos e vídeos e consulte o planejamento.</span><small>ACESSAR CALENDÁRIO ↗</small></a>
-          <div className="client-card"><strong>Aprovações</strong><span>Revise conteúdos e envie solicitações de ajustes.</span><small>Em preparação</small></div>
-          <div className="client-card"><strong>Arquivos</strong><span>Encontre materiais e entregas da sua empresa.</span><small>Em preparação</small></div>
-        </div>
-      </section>
+        <section className="client-home-section">
+          <div className="client-home-section-heading">
+            <div><p className="client-home-kicker">CENTRAL DA EMPRESA</p><h2>O que você precisa?</h2></div>
+            <span className="client-home-section-number">01 / 04</span>
+          </div>
+          <div className="client-home-modules">
+            <a className="client-home-module client-home-module-active" href="/cliente/calendario">
+              <span className="client-home-module-number">01</span>
+              <span className="client-home-module-icon">▦</span>
+              <strong>Calendário editorial</strong>
+              <span className="client-home-module-description">Acompanhe datas, publicações e conteúdos programados.</span>
+              <span className="client-home-module-action">ACESSAR <b>↗</b></span>
+            </a>
+            <div className="client-home-module">
+              <span className="client-home-module-number">02</span>
+              <span className="client-home-module-icon">✳</span>
+              <strong>Briefing</strong>
+              <span className="client-home-module-description">Compartilhe informações e detalhes importantes da sua marca.</span>
+              <span className="client-home-module-status">EM PREPARAÇÃO</span>
+            </div>
+            <div className="client-home-module">
+              <span className="client-home-module-number">03</span>
+              <span className="client-home-module-icon">✓</span>
+              <strong>Aprovações</strong>
+              <span className="client-home-module-description">Revise conteúdos e envie solicitações de ajustes.</span>
+              <span className="client-home-module-status">EM PREPARAÇÃO</span>
+            </div>
+            <div className="client-home-module">
+              <span className="client-home-module-number">04</span>
+              <span className="client-home-module-icon">⌑</span>
+              <strong>Arquivos e entregas</strong>
+              <span className="client-home-module-description">Encontre materiais e arquivos da sua empresa.</span>
+              <span className="client-home-module-status">EM PREPARAÇÃO</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="client-brand-settings">
+          <div>
+            <p className="client-home-kicker">PERSONALIZAÇÃO</p>
+            <h2>Identidade da sua empresa</h2>
+            <p>Você pode atualizar a logo que aparece neste espaço. As demais configurações são gerenciadas pela equipe responsável.</p>
+          </div>
+          <div className="client-logo-control">
+            <div className="client-logo-preview">{logoUrl ? <img src={logoUrl} alt={`Logo de ${client?.name}`} /> : <span>LOGO</span>}</div>
+            <label htmlFor="company-logo" className="client-logo-upload-button">{uploading ? "ENVIANDO..." : "TROCAR LOGO"}</label>
+            <input id="company-logo" type="file" accept="image/png,image/jpeg,image/webp" onChange={uploadLogo} disabled={uploading} />
+            <small>PNG, JPG ou WEBP · máximo de 2 MB</small>
+            {uploadFeedback && <small className="client-logo-feedback" role="status">{uploadFeedback}</small>}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
