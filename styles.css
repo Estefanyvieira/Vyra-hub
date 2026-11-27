@@ -143,3 +143,21 @@ button,input,textarea{font:inherit}
 .logo-upload input::file-selector-button{margin-right:12px;padding:9px 12px;border:0;border-radius:6px;background:var(--purple);color:#160d20;font:700 10px 'Montserrat',sans-serif;cursor:pointer}
 .logo-upload input:disabled{opacity:.55;cursor:wait}
 .logo-upload small{font:600 10px/1.6 'Montserrat',sans-serif;color:#c9a5f4}
+
+
+/* Gerenciamento de usuários por empresa */
+.user-admin-form{display:grid;gap:15px;max-width:650px;padding:25px;background:linear-gradient(110deg,#17131e,#100e15);border:1px solid #34283f;border-radius:7px}
+.user-admin-form label{display:grid;gap:8px;color:#c9bfce;font:700 9px 'Montserrat',sans-serif;letter-spacing:.13em;text-transform:uppercase}
+.user-admin-form input{width:100%;background:#211d29;border:1px solid #45394f;color:#fff;border-radius:7px;padding:13px;font:400 12px 'Montserrat',sans-serif;text-transform:none;letter-spacing:normal}
+.user-form-note{font:400 10px/1.8 'Montserrat',sans-serif;color:#a69bad;margin:0}
+.user-admin-form .button{justify-self:start}
+.success-message{margin:0;padding:12px;border-radius:7px;background:#183326;color:#a8e4bd;font:500 11px/1.6 'Montserrat',sans-serif}
+.user-list{display:grid;gap:9px}
+.user-row{display:flex;align-items:center;gap:16px;padding:17px 20px;background:#15121a;border:1px solid #302838;border-radius:6px}
+.user-index{font:400 23px 'Anton',sans-serif;color:#8b6aa6}
+.user-row div{display:grid;gap:5px;min-width:0;flex:1}
+.user-row strong{font:700 14px 'League Spartan',sans-serif}
+.user-row small{font:400 10px 'Montserrat',sans-serif;color:#a69bad;overflow-wrap:anywhere}
+.user-status{font:700 8px 'Montserrat',sans-serif;letter-spacing:.13em;color:#b98bf2}
+.secondary-button{margin-top:22px;background:transparent;color:#e8d9f4;border:1px solid #5c456f}
+@media(max-width:600px){.user-row{padding:14px 12px;gap:10px}.user-status{font-size:7px}}
