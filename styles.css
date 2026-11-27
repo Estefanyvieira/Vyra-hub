@@ -193,3 +193,40 @@ button,input,textarea{font:inherit}
 .status-control{display:flex;align-items:center;gap:12px;max-width:380px;margin-top:18px;font:700 9px 'Montserrat',sans-serif;letter-spacing:.1em;color:#b8a9c5}
 .status-control select{flex:1}
 @media(max-width:680px){.content-filter{width:100%;min-width:0}.dashboard-section-heading:has(.content-filter){align-items:stretch;flex-direction:column}.content-post{padding:18px 15px}.status-control{align-items:flex-start;flex-direction:column}.status-control select{width:100%}}
+
+
+/* Calendário editorial com estados de aprovação */
+.editorial-calendar{margin:22px 0 28px;padding:22px;background:linear-gradient(115deg,#15121b,#0f0d14);border:1px solid #34283f;border-radius:8px}
+.calendar-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.calendar-heading .section-index{margin-bottom:7px}
+.calendar-heading h3{font:700 22px 'League Spartan',sans-serif;text-transform:capitalize;margin:0;color:#fff}
+.calendar-navigation{display:flex;gap:7px}
+.calendar-navigation button{min-width:36px;height:34px;padding:0 11px;border:1px solid #4a3a57;border-radius:5px;background:#211b29;color:#e9dcf4;font:700 11px 'Montserrat',sans-serif;cursor:pointer}
+.calendar-navigation button:hover{border-color:var(--purple);color:#fff}
+.calendar-legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:15px}
+.calendar-legend span{display:flex;align-items:center;gap:7px;color:#b8adbf;font:600 9px 'Montserrat',sans-serif}
+.legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.legend-red{background:#ff5c70}.legend-green{background:#42d58a}.legend-purple{background:#b36cff}.legend-muted{background:#82788c}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid #302838;border-left:1px solid #302838}
+.calendar-weekday{padding:10px 5px;text-align:center;background:#191520;color:#a99bb3;font:700 9px 'Montserrat',sans-serif;letter-spacing:.08em;border-right:1px solid #302838;border-bottom:1px solid #302838}
+.calendar-day{min-width:0;min-height:108px;padding:7px;background:rgba(255,255,255,.012);border-right:1px solid #302838;border-bottom:1px solid #302838}
+.calendar-day-empty{background:rgba(0,0,0,.16)}
+.calendar-day-today{background:rgba(179,108,255,.07);box-shadow:inset 0 0 0 1px rgba(179,108,255,.35)}
+.calendar-day-number{display:block;margin-bottom:6px;color:#d8cde0;font:600 10px 'Montserrat',sans-serif}
+.calendar-day-today .calendar-day-number{color:#d0a5ff}
+.calendar-day-events{display:grid;gap:4px}
+.calendar-event{min-width:0;padding:5px 6px;border-radius:4px;border-left:3px solid;overflow:hidden}
+.calendar-event strong,.calendar-event small{display:block;overflow:hidden;text-overflow:ellipsis}
+.calendar-event strong{font:700 9px/1.35 'Montserrat',sans-serif;white-space:normal;overflow-wrap:anywhere}
+.calendar-event small{font:500 7px/1.4 'Montserrat',sans-serif;margin-top:3px}
+.calendar-event-pending{background:rgba(255,76,99,.14);border-color:#ff5c70;color:#ffc0c8}
+.calendar-event-approved{background:rgba(47,204,127,.14);border-color:#42d58a;color:#a5f1c8}
+.calendar-event-published{background:rgba(179,108,255,.14);border-color:#b36cff;color:#dec0ff}
+.calendar-event-draft{background:rgba(130,120,140,.13);border-color:#82788c;color:#c0b7c8}
+.calendar-note{margin:14px 0 0;color:#95899f;font:400 9px/1.7 'Montserrat',sans-serif}
+.content-post-media{margin:14px 0;padding:12px;background:#100e15;border:1px solid #302838;border-radius:6px}
+.content-post-media p{font:400 10px 'Montserrat',sans-serif;color:#b8adbf}
+.content-post-media img,.content-post-media video{display:block;max-width:100%;max-height:340px;border-radius:5px}
+.content-file-preview{display:grid;gap:8px;padding:12px;background:#100e15;border:1px solid #302838;border-radius:6px;color:#d9cde2;font:400 10px 'Montserrat',sans-serif}
+.content-file-preview img,.content-file-preview video{max-width:100%;max-height:260px;border-radius:5px}
+@media(max-width:680px){.editorial-calendar{padding:13px 9px;overflow-x:auto}.calendar-grid{min-width:620px}.calendar-day{min-height:92px;padding:5px}.calendar-event{padding:4px}.calendar-event strong{font-size:8px}.calendar-legend{gap:8px 12px}.calendar-legend span{font-size:8px}.calendar-heading h3{font-size:19px}}
