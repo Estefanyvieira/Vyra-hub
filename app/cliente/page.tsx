@@ -9,6 +9,7 @@ type ClientInfo = {
   name: string;
   logo_url: string | null;
   welcome_message: string | null;
+  brand_color: string | null;
 };
 
 type PageState = "loading" | "ready" | "error";
@@ -56,7 +57,7 @@ export default function ClientHomePage() {
 
         const { data: company, error: companyError } = await supabase
           .from("clients")
-          .select("id, name, logo_url, welcome_message")
+          .select("id, name, logo_url, welcome_message, brand_color")
           .eq("id", profile.client_id)
           .single();
 
@@ -170,9 +171,9 @@ export default function ClientHomePage() {
   }
 
   return (
-    <main className="app-shell">
-      <header className="topbar">
-        <div className="brand small">VYRA<span>.</span></div>
+    <main className="app-shell client-home-shell" style={{ "--client-accent": client?.brand_color || "#A47376" } as React.CSSProperties}>
+      <header className="topbar client-home-topbar">
+        <div className="client-home-brand">{logoUrl ? <img src={logoUrl} alt={`Logo de ${client?.name}`} /> : <span>{client?.name}</span>}</div>
         <button className="ghost" onClick={signOut}>Sair da conta</button>
       </header>
 
@@ -197,7 +198,7 @@ export default function ClientHomePage() {
         <h2>Seus próximos passos</h2>
         <div className="client-grid">
           <div className="client-card"><strong>Briefing</strong><span>Compartilhe informações importantes sobre sua marca.</span><small>Em preparação</small></div>
-          <div className="client-card"><strong>Calendário</strong><span>Acompanhe o planejamento dos conteúdos.</span><small>Em preparação</small></div>
+          <a className="client-card client-calendar-link" href="/cliente/calendario"><strong>Calendário</strong><span>Acompanhe as publicações, visualize fotos e vídeos e consulte o planejamento.</span><small>ACESSAR CALENDÁRIO ↗</small></a>
           <div className="client-card"><strong>Aprovações</strong><span>Revise conteúdos e envie solicitações de ajustes.</span><small>Em preparação</small></div>
           <div className="client-card"><strong>Arquivos</strong><span>Encontre materiais e entregas da sua empresa.</span><small>Em preparação</small></div>
         </div>
