@@ -7,6 +7,53 @@ function response(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
 }
 
+
+export async function GET(request: NextRequest) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  if (!supabaseUrl || !secretKey) return response("A configuração segura do servidor está incompleta.", 500);
+
+  const authorization = request.headers.get("authorization");
+  const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : "";
+  if (!token) return response("Sessão não encontrada. Entre novamente.", 401);
+
+  const adminClient = createClient(supabaseUrl, secretKey, {
+    auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  });
+
+  const { data: authData, error: authError } = await adminClient.auth.getUser(token);
+  if (authError || !authData.user) return response("Sua sessão é inválida ou expirou. Entre novamente.", 401);
+
+  const { data: callerProfile, error: callerError } = await adminClient
+    .from("profiles").select("role").eq("id", authData.user.id).single();
+  if (callerError || callerProfile?.role !== "admin") return response("Apenas a administração da VYRA pode consultar usuários.", 403);
+
+  const clientId = request.nextUrl.searchParams.get("clientId") || "";
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(clientId)) {
+    return response("A empresa selecionada é inválida.", 400);
+  }
+
+  const { data: client, error: clientError } = await adminClient
+    .from("clients").select("id, name").eq("id", clientId).maybeSingle();
+  if (clientError || !client) return response("A empresa selecionada não foi encontrada.", 404);
+
+  const { data: profiles, error: profilesError } = await adminClient
+    .from("profiles").select("id, full_name, created_at").eq("client_id", clientId).eq("role", "client").order("created_at", { ascending: true });
+  if (profilesError) return response("Não foi possível carregar os usuários desta empresa.", 500);
+
+  const users = await Promise.all((profiles || []).map(async (profile) => {
+    const { data } = await adminClient.auth.admin.getUserById(profile.id);
+    return {
+      id: profile.id,
+      full_name: profile.full_name || "Nome não informado",
+      email: data.user?.email || "E-mail indisponível",
+      created_at: profile.created_at,
+    };
+  }));
+
+  return NextResponse.json({ client, users, limit: 6 });
+}
+
 export async function POST(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const secretKey = process.env.SUPABASE_SECRET_KEY;
