@@ -39,9 +39,10 @@ export async function GET(request: NextRequest) {
     return response("A empresa selecionada é inválida.", 400);
   }
 
-  const { data: client, error: clientError } = await adminClient
+  const { data: client, error: clientError } = await userClient
     .from("clients").select("id, name").eq("id", clientId).maybeSingle();
-  if (clientError || !client) return response("A empresa selecionada não foi encontrada.", 404);
+  if (clientError) return response(`Falha ao consultar a empresa: ${clientError.code || "sem código"} — ${clientError.message}`, 500);
+  if (!client) return response("A empresa selecionada não foi encontrada.", 404);
 
   const { data: profiles, error: profilesError } = await adminClient
     .from("profiles").select("id, full_name, created_at").eq("client_id", clientId).eq("role", "client").order("created_at", { ascending: true });
