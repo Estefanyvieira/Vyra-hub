@@ -653,3 +653,36 @@ button,input,textarea{font:inherit}
     padding:18px 14px;
   }
 }
+
+
+/* Portfólio VYRA e módulos financeiros do cliente */
+.client-module-page{min-height:calc(100vh - 150px);padding:54px clamp(18px,6vw,84px) 75px;color:#f7f2f3}
+.client-module-content{max-width:1120px;margin:0 auto}
+.client-module-kicker{margin:0 0 14px;color:var(--client-accent);font:700 9px 'Montserrat',sans-serif;letter-spacing:.22em}
+.client-module-content h1{margin:0;font:400 clamp(42px,6vw,68px)/1 'DM Serif Display',Georgia,serif}
+.client-module-content h1 em{color:var(--client-accent);font-weight:400}
+.client-module-intro{max-width:690px;color:#b9afb1;font:400 12px/1.9 'Montserrat',sans-serif;margin:20px 0 36px}
+.client-module-muted,.client-module-error,.client-module-footnote{color:#a99b9d;font:400 10px/1.8 'Montserrat',sans-serif}
+.client-module-empty{padding:55px 20px;margin-top:25px;text-align:center;border:1px dashed color-mix(in srgb,var(--client-accent) 40%,#30272a)}
+.client-module-empty>span{font-size:30px;color:var(--client-accent)}
+.client-module-empty h2{font:400 25px 'DM Serif Display',Georgia,serif}
+.client-module-empty p{font:400 10px 'Montserrat',sans-serif;color:#a99b9d}
+.client-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.client-service-card{display:flex;flex-direction:column;align-items:flex-start;min-height:280px;padding:25px;background:linear-gradient(145deg,#151012,#0b090a);border:1px solid color-mix(in srgb,var(--client-accent) 28%,#30272a)}
+.client-service-category{color:var(--client-accent);font:700 8px 'Montserrat',sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.client-service-card h2{margin:19px 0 10px;font:400 25px 'DM Serif Display',Georgia,serif}
+.client-service-card p{margin:0;color:#b9afb1;font:400 10px/1.8 'Montserrat',sans-serif}
+.client-service-price{margin-top:18px;color:#f5eeee;font:600 11px 'Montserrat',sans-serif}
+.client-service-cta{margin-top:auto;padding-top:24px;color:var(--client-accent);text-decoration:none;font:700 8px 'Montserrat',sans-serif;letter-spacing:.13em}
+.client-module-footnote{margin-top:30px;padding-top:17px;border-top:1px solid #30272a}
+.service-toggle{display:flex!important;align-items:center;gap:10px}
+.service-toggle input{width:auto!important}
+.service-form-actions{display:flex;gap:10px;flex-wrap:wrap}
+.admin-service-list{display:grid;gap:12px;margin-top:18px}
+.admin-service-row{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:20px;background:#15121a;border:1px solid #302838}
+.admin-service-row h3{margin:9px 0 5px;font:600 19px 'League Spartan',sans-serif;color:#fff}
+.admin-service-row p{margin:0;color:#a99fb1;font:400 10px/1.7 'Montserrat',sans-serif}
+.admin-service-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.admin-service-actions strong{color:#d9b8f7;font:600 11px 'Montserrat',sans-serif}
+@media(max-width:800px){.client-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.client-module-page{padding:35px 16px 50px}.client-service-grid{grid-template-columns:1fr}.admin-service-row{align-items:flex-start;flex-direction:column}.admin-service-actions{width:100%;justify-content:space-between}}
