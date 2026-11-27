@@ -599,9 +599,12 @@ button,input,textarea{font:inherit}
   object-fit:contain !important;
   object-position:center center !important;
   filter:
-    drop-shadow(0 22px 24px rgba(0,0,0,.72))
-    drop-shadow(0 7px 10px rgba(0,0,0,.48))
-    drop-shadow(0 0 18px color-mix(in srgb,var(--client-accent) 16%,transparent)) !important;
+    brightness(1.28)
+    contrast(1.08)
+    drop-shadow(0 0 8px color-mix(in srgb,var(--client-accent) 42%,transparent))
+    drop-shadow(0 0 22px color-mix(in srgb,var(--client-accent) 30%,transparent))
+    drop-shadow(0 22px 24px rgba(0,0,0,.58))
+    drop-shadow(0 7px 10px rgba(0,0,0,.34)) !important;
 }
 .client-welcome-panel:after{
   content:none !important;
