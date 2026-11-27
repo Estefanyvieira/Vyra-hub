@@ -51,7 +51,7 @@ export default function AdminApprovalsPage() {
           supabase.from("posts").select("id,client_id,title,caption,format,scheduled_for,status,media_path,media_type,media_name").order("scheduled_for", { ascending: true })
         ]);
         if (clientsError || postsError) throw new Error("Não foi possível carregar as publicações da agência.");
-        const clientNames = new Map((clientRows ?? []).map((client: {id:string;name:string}) => [client.id, client.name]));
+        const clientNames = new Map<string, string>((clientRows ?? []).map((client: {id:string;name:string}) => [client.id, client.name] as [string, string]));
         const withMedia = await Promise.all(((postRows ?? []) as Post[]).map(async post => {
           if (!post.media_path) return { ...post, client_name: clientNames.get(post.client_id) || "Empresa" };
           const { data } = await supabase.storage.from("client-content").createSignedUrl(post.media_path, 600);
@@ -67,7 +67,7 @@ export default function AdminApprovalsPage() {
           let authorMap = new Map<string, {name:string;role:string}>();
           if (authorIds.length) {
             const { data: people } = await supabase.from("profiles").select("id,full_name,role").in("id", authorIds);
-            authorMap = new Map((people ?? []).map((person: {id:string;full_name:string|null;role:string}) => [person.id, { name: person.full_name || (person.role === "admin" ? "Equipe VYRA" : "Cliente"), role: person.role }]));
+            authorMap = new Map<string, {name:string;role:string}>((people ?? []).map((person: {id:string;full_name:string|null;role:string}) => [person.id, { name: person.full_name || (person.role === "admin" ? "Equipe VYRA" : "Cliente"), role: person.role }]));
           }
           commentRows = raw.map(comment => ({ ...comment, author_name: authorMap.get(comment.author_id)?.name || "Usuário", author_role: authorMap.get(comment.author_id)?.role }));
         }
