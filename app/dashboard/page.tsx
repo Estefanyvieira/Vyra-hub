@@ -20,7 +20,8 @@ const sections = [
   ["03", "Conteúdo", "Abrir"],
   ["04", "Aprovações", "Abrir"],
   ["05", "Arquivos", "Em breve"],
-  ["06", "Financeiro", "Em breve"],
+  ["06", "Financeiro", "Abrir"],
+  ["07", "Portfólio VYRA", "Abrir"],
 ];
 
 export default function DashboardPage() {
@@ -113,6 +114,12 @@ export default function DashboardPage() {
               </a>
             ) : index === 3 ? (
               <a className="nav-entry" href="/aprovacoes" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Abrir</span></a>
+            ) : index === 4 ? (
+              <a className="nav-entry" href="/arquivos" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Abrir</span></a>
+            ) : index === 5 ? (
+              <a className="nav-entry" href="/financeiro" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Abrir</span></a>
+            ) : index === 6 ? (
+              <a className="nav-entry" href="/portfolio" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Abrir</span></a>
             ) : (
               <div className={index === 0 ? "nav-entry selected" : "nav-entry disabled"} key={number}>
                 <span className="nav-number">{number}</span>
