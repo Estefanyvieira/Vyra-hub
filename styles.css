@@ -430,3 +430,46 @@ button,input,textarea{font:inherit}
 .client-global-signout{justify-self:end;padding:10px 12px;border:1px solid color-mix(in srgb,var(--client-accent) 48%,#302426);background:transparent;color:#d8cacc;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em;cursor:pointer}
 .client-global-signout:hover{border-color:var(--client-accent);color:var(--client-accent)}
 @media(max-width:700px){.client-global-header{min-height:70px;padding:10px 14px;grid-template-columns:1fr auto;gap:8px}.client-global-brand img{max-width:90px;max-height:38px}.client-global-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;overflow-x:auto;gap:20px;padding:0 0 4px}.client-global-nav a,.client-global-nav span{font-size:7px}.client-global-signout{grid-column:2;grid-row:1;padding:8px 10px}}
+
+
+/* Módulo de aprovações no ambiente personalizado do cliente */
+.client-global-nav a{color:inherit;text-decoration:none}
+.client-global-nav a:hover,.client-global-nav a.active{color:var(--client-accent)}
+.client-home-module-active{text-decoration:none}
+.client-approvals-page{min-height:calc(100vh - 150px);padding:48px clamp(20px,6vw,82px) 70px;color:#f7f2f3}
+.client-approvals-content{max-width:1050px;margin:0 auto}
+.client-approvals-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:30px;border-bottom:1px solid color-mix(in srgb,var(--client-accent) 35%,#292326)}
+.client-approvals-kicker{font:700 9px 'Montserrat',sans-serif;letter-spacing:.22em;color:var(--client-accent);margin:0 0 14px}
+.client-approvals-heading h1{font:400 clamp(38px,6vw,62px)/1 'DM Serif Display',Georgia,serif;margin:0}
+.client-approvals-heading h1 span{color:var(--client-accent)}
+.client-approvals-heading p:not(.client-approvals-kicker){font:400 12px/1.8 'Montserrat',sans-serif;color:#b9afb1;max-width:560px}
+.client-approvals-count{width:112px;height:112px;flex:0 0 112px;border:1px solid color-mix(in srgb,var(--client-accent) 55%,transparent);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.client-approvals-count strong{font:400 34px 'DM Serif Display',Georgia,serif}
+.client-approvals-count span{font:700 7px 'Montserrat',sans-serif;letter-spacing:.15em;color:#b9afb1}
+.client-approvals-feedback{padding:12px 15px;background:#171d19;border:1px solid #354b3c;color:#bce1c7;font:500 11px/1.7 'Montserrat',sans-serif}
+.client-approval-list{display:grid;gap:18px;margin-top:25px}
+.client-approval-card{padding:clamp(18px,3vw,28px);background:#100d0e;border:1px solid color-mix(in srgb,var(--client-accent) 25%,#292326);border-radius:9px}
+.client-approval-card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:700 8px 'Montserrat',sans-serif;letter-spacing:.13em;color:var(--client-accent)}
+.client-approval-card-top .is-changes{color:#e9a46e}
+.client-approval-card h2{font:400 27px 'DM Serif Display',Georgia,serif;margin:14px 0 5px}
+.client-approval-date{font:600 8px 'Montserrat',sans-serif;letter-spacing:.13em;color:#a99c9f}
+.client-approval-media{display:block;width:100%;max-height:560px;object-fit:contain;background:#080707;border-radius:5px;margin:20px auto}
+.client-approval-no-media{padding:35px 15px;text-align:center;background:#171314;color:#b9afb1;font:400 11px 'Montserrat',sans-serif;margin:18px 0}
+.client-approval-caption,.client-approval-comments{margin-top:23px;padding-top:18px;border-top:1px solid #30272a}
+.client-approval-caption h3,.client-approval-comments h3{font:700 13px 'Montserrat',sans-serif;margin:0 0 10px}
+.client-approval-caption p{font:400 12px/1.9 'Montserrat',sans-serif;color:#d1c6c8;white-space:pre-wrap}
+.client-approval-comment{padding:12px;margin:9px 0;background:#1a1517;border-radius:5px}
+.client-approval-comment p{font:400 11px/1.8 'Montserrat',sans-serif;margin:0;white-space:pre-wrap}
+.client-approval-comment small{display:block;margin-top:7px;color:#9c9092;font:400 8px 'Montserrat',sans-serif}
+.client-approval-comments textarea{display:block;width:100%;margin-top:12px;padding:12px;background:#1a1517;border:1px solid #45373b;border-radius:5px;color:#fff;resize:vertical;font:400 11px/1.7 'Montserrat',sans-serif}
+.client-approval-comment-button{margin-top:8px;background:transparent;border:1px solid #5a454a;color:#d9c9cc;padding:9px 12px;border-radius:4px;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em;cursor:pointer}
+.client-approval-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:22px}
+.client-approval-actions button{padding:12px 15px;border-radius:4px;font:700 8px 'Montserrat',sans-serif;letter-spacing:.09em;cursor:pointer}
+.client-approval-actions button:disabled,.client-approval-comment-button:disabled{opacity:.5;cursor:wait}
+.client-approval-revise{background:transparent;border:1px solid #a76d55;color:#e6b29b}
+.client-approval-approve{background:var(--client-accent);border:1px solid var(--client-accent);color:#171011}
+.client-approvals-empty{margin-top:35px;padding:55px 20px;text-align:center;border:1px dashed color-mix(in srgb,var(--client-accent) 40%,#30272a);border-radius:8px}
+.client-approvals-empty>span{font-size:26px;color:var(--client-accent)}
+.client-approvals-empty h2{font:400 22px 'DM Serif Display',Georgia,serif}
+.client-approvals-empty p,.client-approvals-error{font:400 11px/1.8 'Montserrat',sans-serif;color:#b9afb1}
+@media(max-width:600px){.client-approvals-page{padding:30px 16px 50px}.client-approvals-heading{align-items:flex-start}.client-approvals-count{width:82px;height:82px;flex-basis:82px}.client-approvals-count strong{font-size:26px}.client-approvals-count span{font-size:6px}.client-approval-actions{flex-direction:column}.client-approval-actions button{width:100%}}
