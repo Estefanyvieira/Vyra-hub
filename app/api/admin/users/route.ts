@@ -31,7 +31,8 @@ export async function GET(request: NextRequest) {
   });
   const { data: callerProfile, error: callerError } = await userClient
     .from("profiles").select("role").eq("id", authData.user.id).single();
-  if (callerError || callerProfile?.role !== "admin") return response("Apenas a administração da VYRA pode consultar usuários.", 403);
+  if (callerError) return response(`Falha ao consultar o perfil da sessão: ${callerError.code || "sem código"} — ${callerError.message}`, 403);
+  if (callerProfile?.role !== "admin") return response(`O perfil da sessão não está como administrador (função encontrada: ${callerProfile?.role || "não encontrada"}).`, 403);
 
   const clientId = request.nextUrl.searchParams.get("clientId") || "";
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(clientId)) {
