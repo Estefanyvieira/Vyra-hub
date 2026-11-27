@@ -686,3 +686,23 @@ button,input,textarea{font:inherit}
 .admin-service-actions strong{color:#d9b8f7;font:600 11px 'Montserrat',sans-serif}
 @media(max-width:800px){.client-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.client-module-page{padding:35px 16px 50px}.client-service-grid{grid-template-columns:1fr}.admin-service-row{align-items:flex-start;flex-direction:column}.admin-service-actions{width:100%;justify-content:space-between}}
+
+.finance-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.finance-admin-grid .user-admin-form{margin:0}
+.client-finance-package{margin:30px 0;padding:25px;background:linear-gradient(135deg,#171012,#0b090a);border:1px solid color-mix(in srgb,var(--client-accent) 38%,#30272a)}
+.client-finance-package h2{margin:14px 0 8px;font:400 27px 'DM Serif Display',Georgia,serif}
+.client-finance-package>strong{font:600 21px 'Montserrat',sans-serif;color:var(--client-accent)}
+.client-finance-package>strong small{font-size:10px;color:#a99b9d}
+.client-finance-package p{font:400 9px 'Montserrat',sans-serif;color:#a99b9d}
+.client-finance-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0 42px}
+.client-finance-summary article{padding:18px;background:#100d0e;border:1px solid #30272a;display:grid;gap:10px}
+.client-finance-summary span{font:700 8px 'Montserrat',sans-serif;letter-spacing:.12em;color:#a99b9d}
+.client-finance-summary strong{font:400 29px 'DM Serif Display',Georgia,serif;color:var(--client-accent)}
+.client-finance-list{display:grid;gap:10px;margin-top:20px}
+.client-finance-list article{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:19px;background:#100d0e;border:1px solid color-mix(in srgb,var(--client-accent) 24%,#30272a)}
+.client-finance-list h3{margin:8px 0 5px;font:400 18px 'DM Serif Display',Georgia,serif}
+.client-finance-list p{margin:0;color:#a99b9d;font:400 9px 'Montserrat',sans-serif}
+.client-finance-list article>strong{white-space:nowrap;font:600 12px 'Montserrat',sans-serif}
+.finance-status{display:inline-block;font:700 7px 'Montserrat',sans-serif;letter-spacing:.14em}
+.finance-status.paid{color:#9bd6ad}.finance-status.pending{color:#e1c58b}.finance-status.overdue{color:#e69b91}
+@media(max-width:700px){.finance-admin-grid{grid-template-columns:1fr}.client-finance-summary{grid-template-columns:1fr}.client-finance-list article{align-items:flex-start;flex-direction:column}}
