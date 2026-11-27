@@ -18,7 +18,7 @@ const sections = [
   ["01", "Visão geral", "Ativo"],
   ["02", "Clientes", "Em breve"],
   ["03", "Conteúdo", "Abrir"],
-  ["04", "Aprovações", "Em breve"],
+  ["04", "Aprovações", "Abrir"],
   ["05", "Arquivos", "Em breve"],
   ["06", "Financeiro", "Em breve"],
 ];
@@ -111,6 +111,8 @@ export default function DashboardPage() {
                 <span className="nav-name">{label}</span>
                 <span className="nav-status">Abrir</span>
               </a>
+            ) : index === 3 ? (
+              <a className="nav-entry" href="/aprovacoes" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Abrir</span></a>
             ) : (
               <div className={index === 0 ? "nav-entry selected" : "nav-entry disabled"} key={number}>
                 <span className="nav-number">{number}</span>
