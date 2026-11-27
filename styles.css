@@ -161,3 +161,19 @@ button,input,textarea{font:inherit}
 .user-status{font:700 8px 'Montserrat',sans-serif;letter-spacing:.13em;color:#b98bf2}
 .secondary-button{margin-top:22px;background:transparent;color:#e8d9f4;border:1px solid #5c456f}
 @media(max-width:600px){.user-row{padding:14px 12px;gap:10px}.user-status{font-size:7px}}
+
+
+/* Ações administrativas de usuários */
+.user-row-manage{flex-wrap:wrap}
+.user-status-off{color:#e5a2a2}
+.user-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+.user-action{border:1px solid #4b3a58;background:#211b29;color:#d9c8e8;border-radius:5px;padding:8px 10px;font:700 8px 'Montserrat',sans-serif;letter-spacing:.04em;cursor:pointer}
+.user-action:hover{border-color:var(--purple);color:#fff}
+.user-action:disabled{opacity:.5;cursor:wait}
+.user-action-warn{border-color:#62404b;color:#e7b0b8}
+.user-edit-panel{margin-top:18px}
+.user-edit-panel h3{font:700 18px 'League Spartan',sans-serif;margin:0;color:#fff}
+.user-panel-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.user-feedback{margin:18px 0}
+@media(max-width:850px){.user-row-manage{align-items:flex-start}.user-actions{width:100%;justify-content:flex-start;margin-left:42px}}
+@media(max-width:600px){.user-actions{margin-left:0}.user-action{padding:8px;font-size:7px}}
