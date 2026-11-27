@@ -142,7 +142,7 @@ export default function ContentPage() {
       caption: caption.trim() || null,
       format,
       scheduled_for: scheduledFor || null,
-      status: "pending",
+      status: scheduledFor ? "pending" : "draft",
     }).select("id,client_id,title,caption,format,scheduled_for,status,media_path,media_type,media_name").single();
     if (error || !data) {
       setFeedback("Não foi possível criar a publicação. Confira os dados e tente novamente.");
@@ -178,7 +178,7 @@ export default function ContentPage() {
     setTitle(""); setCaption(""); setScheduledFor(""); setMediaFile(null);
     const fileInput = document.getElementById("content-media-file") as HTMLInputElement | null;
     if (fileInput) fileInput.value = "";
-    setFeedback("Publicação enviada automaticamente para aprovação" + (newPost.media_path ? " com anexo." : "."));
+    setFeedback((scheduledFor ? "Publicação enviada automaticamente para aprovação" : "Publicação salva como rascunho, pois não tem data prevista") + (newPost.media_path ? " com anexo." : "."));
     setSaving(false);
   }
 
@@ -225,7 +225,7 @@ export default function ContentPage() {
           <label>Anexar foto ou vídeo<input id="content-media-file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm" onChange={e=>chooseFile(e.target.files?.[0] ?? null)}/></label>
           <p className="user-form-note">Formatos aceitos: JPG, PNG, WEBP, MP4, MOV e WEBM. Limite de 50 MB por arquivo. O anexo ficará privado e vinculado à empresa selecionada.</p>
           {mediaFile && <div className="content-file-preview"><strong>Arquivo selecionado:</strong> {mediaFile.name} ({(mediaFile.size / (1024 * 1024)).toFixed(1)} MB)</div>}
-          <p className="user-form-note">Ao cadastrar, a publicação será enviada automaticamente para aprovação do cliente e aparecerá em vermelho no calendário.</p>
+          <p className="user-form-note">Quando houver uma data prevista, a publicação será enviada automaticamente para aprovação e aparecerá em vermelho no calendário. Sem data, ficará como rascunho.</p>
           <button className="button" disabled={saving || clients.length===0}>{saving ? "Salvando..." : "Cadastrar publicação"}</button>
         </form>
         <div className="dashboard-section-heading"><div><p className="section-index">02 — CALENDÁRIO EDITORIAL</p><h2>Publicações cadastradas<span>.</span></h2></div><select className="content-filter" value={selectedClient} onChange={e=>setSelectedClient(e.target.value)}><option value="all">Todas as empresas</option>{clients.map(client=><option key={client.id} value={client.id}>{client.name}</option>)}</select></div>
