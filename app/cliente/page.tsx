@@ -25,7 +25,7 @@ export default function ClientHomePage() {
 
   useEffect(() => {
     const updateWelcome = () => {
-      const content = document.querySelector(".client-home-content");
+      const content = document.querySelector<HTMLElement>(".client-home-content");
       if (!content) return;
       const progress = Math.min(1, Math.max(0, window.scrollY / 420));
       content.style.setProperty("--welcome-progress", progress.toFixed(3));
