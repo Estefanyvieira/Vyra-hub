@@ -99,11 +99,19 @@ export default function DashboardPage() {
         <p className="sidebar-label">ESPAÇO DE TRABALHO</p>
         <nav className="dashboard-nav" aria-label="Navegação administrativa">
           {sections.map(([number, label, status], index) => (
-            <div className={index === 0 ? "nav-entry selected" : "nav-entry disabled"} key={number}>
-              <span className="nav-number">{number}</span>
-              <span className="nav-name">{label}</span>
-              {index === 0 ? <VyraStar className="nav-star" /> : <span className="nav-status">{status}</span>}
-            </div>
+            index === 1 ? (
+              <a className="nav-entry" href="/clientes" key={number}>
+                <span className="nav-number">{number}</span>
+                <span className="nav-name">{label}</span>
+                <span className="nav-status">Abrir</span>
+              </a>
+            ) : (
+              <div className={index === 0 ? "nav-entry selected" : "nav-entry disabled"} key={number}>
+                <span className="nav-number">{number}</span>
+                <span className="nav-name">{label}</span>
+                {index === 0 ? <VyraStar className="nav-star" /> : <span className="nav-status">{status}</span>}
+              </div>
+            )
           ))}
         </nav>
         <div className="sidebar-signature">
