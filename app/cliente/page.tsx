@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "../../supabase";
 
 type ClientInfo = {
+  id: string;
   name: string;
   logo_url: string | null;
   welcome_message: string | null;
@@ -18,6 +19,8 @@ export default function ClientHomePage() {
   const [client, setClient] = useState<ClientInfo | null>(null);
   const [logoUrl, setLogoUrl] = useState("");
   const [message, setMessage] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadFeedback, setUploadFeedback] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -53,7 +56,7 @@ export default function ClientHomePage() {
 
         const { data: company, error: companyError } = await supabase
           .from("clients")
-          .select("name, logo_url, welcome_message")
+          .select("id, name, logo_url, welcome_message")
           .eq("id", profile.client_id)
           .single();
 
@@ -62,7 +65,6 @@ export default function ClientHomePage() {
         }
 
         if (!active) return;
-
         setClient(company);
 
         if (company.logo_url) {
@@ -71,7 +73,7 @@ export default function ClientHomePage() {
             .from("client-logos")
             .createSignedUrl(company.logo_url, 3600);
 
-          if (!signedError && signed?.signedUrl) setLogoUrl(signed.signedUrl);
+          if (!signedError && signed?.signedUrl && active) setLogoUrl(signed.signedUrl);
         }
 
         if (active) setState("ready");
@@ -88,6 +90,71 @@ export default function ClientHomePage() {
       active = false;
     };
   }, [router]);
+
+  async function uploadLogo(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file || !client) return;
+
+    const allowedTypes: Record<string, string> = {
+      "image/png": "png",
+      "image/jpeg": "jpg",
+      "image/webp": "webp",
+    };
+
+    const extension = allowedTypes[file.type];
+    if (!extension) {
+      setUploadFeedback("Escolha uma imagem PNG, JPG ou WEBP.");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadFeedback("A imagem deve ter no máximo 2 MB.");
+      return;
+    }
+
+    setUploading(true);
+    setUploadFeedback("");
+    const supabase = supabaseBrowser();
+    const newPath = `${client.id}/logo.${extension}`;
+
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from("client-logos")
+        .upload(newPath, file, { upsert: true, contentType: file.type });
+
+      if (uploadError) throw uploadError;
+
+      const { error: updateError } = await supabase
+        .from("clients")
+        .update({ logo_url: newPath })
+        .eq("id", client.id);
+
+      if (updateError) {
+        await supabase.storage.from("client-logos").remove([newPath]);
+        throw updateError;
+      }
+
+      if (client.logo_url && client.logo_url !== newPath) {
+        await supabase.storage.from("client-logos").remove([client.logo_url]);
+      }
+
+      const { data: signed, error: signedError } = await supabase.storage
+        .from("client-logos")
+        .createSignedUrl(newPath, 3600);
+
+      if (signedError || !signed?.signedUrl) {
+        throw new Error("A logo foi salva, mas não foi possível atualizar a prévia. Recarregue a página.");
+      }
+
+      setClient({ ...client, logo_url: newPath });
+      setLogoUrl(signed.signedUrl);
+      setUploadFeedback("Logo atualizada com sucesso!");
+    } catch (error) {
+      setUploadFeedback(error instanceof Error ? error.message : "Não foi possível enviar a logo.");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   async function signOut() {
     await supabaseBrowser().auth.signOut();
@@ -117,6 +184,13 @@ export default function ClientHomePage() {
         )}
         <h1>Bem-vindo(a), {client?.name}.</h1>
         <p className="lead">{client?.welcome_message || "Este é o espaço da sua empresa na VYRA HUB. Aqui você poderá acompanhar seus conteúdos, projetos e materiais."}</p>
+        <div className="logo-upload">
+          <label htmlFor="company-logo">LOGO DA SUA EMPRESA</label>
+          <p>Envie uma imagem PNG, JPG ou WEBP de até 2 MB. Você poderá substituí-la quando quiser.</p>
+          <input id="company-logo" type="file" accept="image/png,image/jpeg,image/webp" onChange={uploadLogo} disabled={uploading} />
+          {uploading && <small>Enviando sua logo...</small>}
+          {uploadFeedback && <small role="status">{uploadFeedback}</small>}
+        </div>
       </section>
 
       <section className="section">
