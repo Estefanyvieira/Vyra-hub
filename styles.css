@@ -417,3 +417,16 @@ button,input,textarea{font:inherit}
 .client-logo-control .client-logo-feedback{color:var(--client-accent)}
 @media(max-width:900px){.client-home-modules{grid-template-columns:repeat(2,minmax(0,1fr))}.client-welcome-mark{flex-basis:140px;width:140px;height:140px}}
 @media(max-width:600px){.client-home-redesigned{padding:0 15px 40px}.client-home-header{min-height:70px}.client-home-identity img{max-width:90px;max-height:42px}.client-home-identity-name{font-size:7px}.client-home-signout{padding:9px}.client-welcome-panel{min-height:0;margin:24px 0 48px;padding:28px 22px}.client-welcome-mark{display:none}.client-welcome-copy h1{font-size:43px}.client-home-section{margin-bottom:48px}.client-home-section-heading{align-items:flex-start}.client-home-modules{grid-template-columns:1fr 1fr;gap:7px}.client-home-module{min-height:220px;padding:17px 13px}.client-home-module strong{font-size:16px}.client-home-module-description{font-size:8px}.client-brand-settings{align-items:flex-start;flex-direction:column}.client-logo-control{min-width:0}}
+
+/* Navegação única do ambiente personalizado do cliente */
+.client-global-header{position:relative;z-index:5;min-height:76px;padding:0 clamp(18px,5vw,76px);display:grid;grid-template-columns:minmax(130px,1fr) auto minmax(90px,1fr);align-items:center;gap:22px;background:#080607;border-bottom:1px solid color-mix(in srgb,var(--client-accent) 30%,#292124)}
+.client-global-brand{min-width:0;display:flex;align-items:center;color:#f4e9ea;text-decoration:none;font:400 17px var(--client-display-font);letter-spacing:.04em}
+.client-global-brand img{max-width:125px;max-height:48px;object-fit:contain}
+.client-global-nav{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2.4vw,34px)}
+.client-global-nav a,.client-global-nav span{padding:10px 0;color:#918385;text-decoration:none;font:700 8px 'Montserrat',sans-serif;letter-spacing:.13em;white-space:nowrap}
+.client-global-nav a:hover,.client-global-nav a.active{color:var(--client-accent)}
+.client-global-nav a.active{border-bottom:1px solid var(--client-accent)}
+.client-global-nav span{opacity:.42;cursor:default}
+.client-global-signout{justify-self:end;padding:10px 12px;border:1px solid color-mix(in srgb,var(--client-accent) 48%,#302426);background:transparent;color:#d8cacc;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em;cursor:pointer}
+.client-global-signout:hover{border-color:var(--client-accent);color:var(--client-accent)}
+@media(max-width:700px){.client-global-header{min-height:70px;padding:10px 14px;grid-template-columns:1fr auto;gap:8px}.client-global-brand img{max-width:90px;max-height:38px}.client-global-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;overflow-x:auto;gap:20px;padding:0 0 4px}.client-global-nav a,.client-global-nav span{font-size:7px}.client-global-signout{grid-column:2;grid-row:1;padding:8px 10px}}
