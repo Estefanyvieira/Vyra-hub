@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "../../supabase";
@@ -29,6 +29,11 @@ export default function ClientsPage() {
   const [clients, setClients] = useState<ClientRow[]>([]);
   const [userCounts, setUserCounts] = useState<Record<string, number>>({});
   const [message, setMessage] = useState("");
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [newClientName, setNewClientName] = useState("");
+  const [newServiceSummary, setNewServiceSummary] = useState("");
+  const [newWelcomeMessage, setNewWelcomeMessage] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -89,6 +94,42 @@ export default function ClientsPage() {
     return () => { active = false; };
   }, [router]);
 
+  async function createClient(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setCreating(true);
+    setMessage("");
+    try {
+      const supabase = supabaseBrowser();
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) throw new Error("Sua sessão expirou. Entre novamente.");
+
+      const response = await fetch("/api/admin/clients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          name: newClientName,
+          serviceSummary: newServiceSummary,
+          welcomeMessage: newWelcomeMessage,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Não foi possível cadastrar a empresa.");
+
+      setClients((current) => [...current, result.client]);
+      setUserCounts((current) => ({ ...current, [result.client.id]: 0 }));
+      setNewClientName("");
+      setNewServiceSummary("");
+      setNewWelcomeMessage("");
+      setShowCreateForm(false);
+      setMessage(`Empresa ${result.client.name} cadastrada com sucesso. O espaço já foi criado.`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Não foi possível cadastrar a empresa.");
+    } finally {
+      setCreating(false);
+    }
+  }
+
   async function signOut() {
     await supabaseBrowser().auth.signOut();
     router.replace("/login");
@@ -135,8 +176,29 @@ export default function ClientsPage() {
 
           <div className="dashboard-section-heading">
             <div><p className="section-index">01 — SUA CARTEIRA</p><h2>Clientes cadastrados<span>.</span></h2></div>
-            <span className="section-caption">DADOS ATUALIZADOS DO SUPABASE</span>
+            <button type="button" className="button" onClick={() => { setShowCreateForm((value) => !value); setMessage(""); }}>
+              {showCreateForm ? "Fechar cadastro" : "+ Cadastrar cliente"}
+            </button>
           </div>
+
+          {message && <p className="success-message user-feedback">{message}</p>}
+
+          {showCreateForm && (
+            <form className="user-admin-form" onSubmit={createClient}>
+              <p className="section-index">NOVO ESPAÇO · VYRA HUB</p>
+              <label>Nome da empresa
+                <input required maxLength={120} value={newClientName} onChange={(event) => setNewClientName(event.target.value)} placeholder="Ex.: Nome da empresa" />
+              </label>
+              <label>Serviços contratados
+                <input maxLength={500} value={newServiceSummary} onChange={(event) => setNewServiceSummary(event.target.value)} placeholder="Ex.: Gestão de redes sociais, fotografia e vídeos" />
+              </label>
+              <label>Mensagem de boas-vindas (opcional)
+                <input maxLength={300} value={newWelcomeMessage} onChange={(event) => setNewWelcomeMessage(event.target.value)} placeholder="Ex.: Seja bem-vinda ao seu espaço VYRA!" />
+              </label>
+              <p className="user-form-note">O cadastro cria o espaço privado da empresa. Nenhum usuário será criado nesta etapa; os logins serão adicionados depois, em “Gerenciar usuários”.</p>
+              <button className="button" disabled={creating}>{creating ? "Criando espaço..." : "Criar espaço da empresa"}</button>
+            </form>
+          )}
 
           {clients.length === 0 ? (
             <div className="clients-empty"><VyraStar /><h3>Nenhum cliente cadastrado ainda.</h3><p>Quando uma empresa for cadastrada, ela aparecerá aqui.</p></div>
@@ -157,7 +219,7 @@ export default function ClientsPage() {
             </div>
           )}
 
-          <div className="clients-note"><VyraStar /><p>Esta área mostra apenas empresas já cadastradas. O cadastro de novas empresas e o gerenciamento dos acessos serão adicionados na próxima etapa.</p></div>
+          <div className="clients-note"><VyraStar /><p>Cadastre uma empresa para criar seu espaço privado. Depois, abra o cadastro e use “Gerenciar usuários” para criar os logins individuais (até 6 por empresa).</p></div>
 
           <footer className="dashboard-footer"><span>VYRA MÍDIA © 2026</span><span>MENOS DO MESMO. <b>MAIS IMPACTO.</b></span></footer>
         </div>
