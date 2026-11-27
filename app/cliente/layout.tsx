@@ -101,7 +101,7 @@ export default function ClientAreaLayout({ children }: { children: React.ReactNo
         <nav className="client-global-nav" aria-label="Navegação da empresa">
           <Link href="/cliente" className={pathname === "/cliente" ? "active" : ""}>INÍCIO</Link>
           <Link href="/cliente/calendario" className={pathname.startsWith("/cliente/calendario") ? "active" : ""}>CALENDÁRIO</Link>
-          <span aria-disabled="true">APROVAÇÕES</span>
+          <Link href="/cliente/aprovacoes" className={pathname.startsWith("/cliente/aprovacoes") ? "active" : ""}>APROVAÇÕES</Link>
           <span aria-disabled="true">ARQUIVOS</span>
         </nav>
         <button className="client-global-signout" onClick={signOut}>SAIR ↗</button>
