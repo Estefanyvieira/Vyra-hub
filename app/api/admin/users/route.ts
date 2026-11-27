@@ -11,7 +11,8 @@ function response(message: string, status: number) {
 export async function GET(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const secretKey = process.env.SUPABASE_SECRET_KEY;
-  if (!supabaseUrl || !secretKey) return response("A configuração segura do servidor está incompleta.", 500);
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!supabaseUrl || !secretKey || !anonKey) return response("A configuração segura do servidor está incompleta.", 500);
 
   const authorization = request.headers.get("authorization");
   const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : "";
@@ -24,7 +25,11 @@ export async function GET(request: NextRequest) {
   const { data: authData, error: authError } = await adminClient.auth.getUser(token);
   if (authError || !authData.user) return response("Sua sessão é inválida ou expirou. Entre novamente.", 401);
 
-  const { data: callerProfile, error: callerError } = await adminClient
+  const userClient = createClient(supabaseUrl, anonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  });
+  const { data: callerProfile, error: callerError } = await userClient
     .from("profiles").select("role").eq("id", authData.user.id).single();
   if (callerError || callerProfile?.role !== "admin") return response("Apenas a administração da VYRA pode consultar usuários.", 403);
 
@@ -58,8 +63,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const secretKey = process.env.SUPABASE_SECRET_KEY;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !secretKey) {
+  if (!supabaseUrl || !secretKey || !anonKey) {
     return response("A configuração segura do servidor está incompleta.", 500);
   }
 
@@ -83,11 +89,12 @@ export async function POST(request: NextRequest) {
     return response("Sua sessão é inválida ou expirou. Entre novamente.", 401);
   }
 
-  const { data: callerProfile, error: callerError } = await adminClient
-    .from("profiles")
-    .select("role")
-    .eq("id", authData.user.id)
-    .single();
+  const userClient = createClient(supabaseUrl, anonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  });
+  const { data: callerProfile, error: callerError } = await userClient
+    .from("profiles").select("role").eq("id", authData.user.id).single();
 
   if (callerError || callerProfile?.role !== "admin") {
     return response("Apenas a administração da VYRA pode criar usuários.", 403);
@@ -168,7 +175,8 @@ export async function POST(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const secretKey = process.env.SUPABASE_SECRET_KEY;
-  if (!supabaseUrl || !secretKey) return response("A configuração segura do servidor está incompleta.", 500);
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!supabaseUrl || !secretKey || !anonKey) return response("A configuração segura do servidor está incompleta.", 500);
 
   const authorization = request.headers.get("authorization");
   const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : "";
@@ -181,7 +189,11 @@ export async function PATCH(request: NextRequest) {
   const { data: authData, error: authError } = await adminClient.auth.getUser(token);
   if (authError || !authData.user) return response("Sua sessão é inválida ou expirou. Entre novamente.", 401);
 
-  const { data: callerProfile, error: callerError } = await adminClient
+  const userClient = createClient(supabaseUrl, anonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  });
+  const { data: callerProfile, error: callerError } = await userClient
     .from("profiles").select("role").eq("id", authData.user.id).single();
   if (callerError || callerProfile?.role !== "admin") return response("Apenas a administração da VYRA pode gerenciar usuários.", 403);
 
