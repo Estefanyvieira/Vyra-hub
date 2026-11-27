@@ -108,12 +108,6 @@ export default function ClientCalendarPage() {
 
   const accent = client.brand_color || "#A47376";
   return <main className="client-calendar-page" style={{ "--client-accent": accent } as React.CSSProperties}>
-    <header className="client-calendar-topbar">
-      <Link href="/cliente" className="client-calendar-back">← Espaço da empresa</Link>
-      {logoUrl ? <img src={logoUrl} alt={client.name} className="client-calendar-logo" /> : <span className="client-calendar-company">{client.name}</span>}
-      <span className="client-calendar-top-label">CALENDÁRIO EDITORIAL</span>
-    </header>
-
     <section className="client-calendar-content">
       <div className="client-calendar-title-row">
         <div><p className="client-calendar-kicker">PLANEJAMENTO DE CONTEÚDO</p><h1>{client.name}</h1><p className="client-calendar-subtitle">Seu conteúdo, organizado em um só lugar.</p></div>
