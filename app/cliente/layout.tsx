@@ -1,0 +1,85 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabaseBrowser } from "../../supabase";
+
+type Theme = {
+  accent: string;
+  companyName: string;
+};
+
+export default function ClientAreaLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const [theme, setTheme] = useState<Theme | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadTheme() {
+      try {
+        const supabase = supabaseBrowser();
+        const { data: auth, error: authError } = await supabase.auth.getUser();
+        if (authError || !auth.user) {
+          router.replace("/login");
+          return;
+        }
+
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("role, client_id")
+          .eq("id", auth.user.id)
+          .single();
+
+        if (profileError || !profile) throw new Error("Não foi possível identificar o perfil.");
+        if (profile.role === "admin") {
+          router.replace("/dashboard");
+          return;
+        }
+        if (profile.role !== "client" || !profile.client_id) {
+          throw new Error("Este acesso não está vinculado a uma empresa.");
+        }
+
+        const { data: company, error: companyError } = await supabase
+          .from("clients")
+          .select("name, brand_color")
+          .eq("id", profile.client_id)
+          .single();
+
+        if (companyError || !company) throw new Error("Não foi possível carregar a identidade da empresa.");
+        if (active) setTheme({
+          accent: company.brand_color || "#B7A0A2",
+          companyName: company.name,
+        });
+      } catch {
+        if (active) setFailed(true);
+      }
+    }
+
+    loadTheme();
+    return () => { active = false; };
+  }, [router]);
+
+  if (failed) {
+    return <main className="client-brand-loading"><p>Não foi possível preparar o espaço da empresa. Atualize a página ou entre novamente.</p><button onClick={() => router.replace("/login")}>Voltar ao acesso</button></main>;
+  }
+
+  if (!theme) return <main className="client-brand-loading"><p>Preparando o espaço de { "sua empresa" }...</p></main>;
+
+  return (
+    <div
+      className="client-brand-environment"
+      data-company={theme.companyName}
+      style={{
+        "--client-accent": theme.accent,
+        "--client-background": "#050505",
+        "--client-surface": "#0d090a",
+        "--client-display-font": "'DM Serif Display', Georgia, serif",
+      } as React.CSSProperties}
+    >
+      {children}
+      <footer className="client-platform-signature">✦ VYRA HUB</footer>
+    </div>
+  );
+}
