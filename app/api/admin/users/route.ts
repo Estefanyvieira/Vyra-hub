@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
   if (clientError) return response(`Falha ao consultar a empresa: ${clientError.code || "sem código"} — ${clientError.message}`, 500);
   if (!client) return response("A empresa selecionada não foi encontrada.", 404);
 
-  const { data: profiles, error: profilesError } = await adminClient
+  const { data: profiles, error: profilesError } = await userClient
     .from("profiles").select("id, full_name, created_at").eq("client_id", clientId).eq("role", "client").order("created_at", { ascending: true });
   if (profilesError) return response(`Falha ao consultar os usuários: ${profilesError.code || "sem código"} — ${profilesError.message}`, 500);
 
