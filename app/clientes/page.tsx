@@ -143,7 +143,7 @@ export default function ClientsPage() {
           ) : (
             <div className="clients-list">
               {clients.map((client, index) => (
-                <article className="managed-client-card" key={client.id}>
+                <Link href={`/clientes/${client.id}`} className="managed-client-card" key={client.id}>
                   <div className="managed-client-number">{String(index + 1).padStart(2, "0")}</div>
                   <div className="managed-client-main">
                     <span className="feature-tag">CLIENTE VYRA</span>
@@ -152,7 +152,7 @@ export default function ClientsPage() {
                     <div className="managed-client-meta"><span>{userCounts[client.id] ?? 0} / 6 usuários vinculados</span><span>{client.logo_url ? "Logo cadastrada" : "Logo pendente"}</span></div>
                   </div>
                   <div className="managed-client-action"><span className="client-active-dot" /> <small>CADASTRADO</small></div>
-                </article>
+                </Link>
               ))}
             </div>
           )}
