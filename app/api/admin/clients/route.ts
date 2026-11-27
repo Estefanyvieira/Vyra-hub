@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     return response("A mensagem de boas-vindas deve ter até 300 caracteres.", 400);
   }
 
-  const { data: existingClients, error: lookupError } = await adminClient
+  const { data: existingClients, error: lookupError } = await userClient
     .from("clients")
     .select("id, name");
 
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
     return response("Já existe uma empresa cadastrada com esse nome. Confira a carteira de clientes.", 409);
   }
 
-  const { data: createdClient, error: createError } = await adminClient
+  const { data: createdClient, error: createError } = await userClient
     .from("clients")
     .insert({
       name,
