@@ -150,7 +150,7 @@ export default function ClientsPage() {
         <nav className="dashboard-nav" aria-label="Navegação administrativa">
           <Link className="nav-entry" href="/dashboard"><span className="nav-number">01</span><span className="nav-name">Visão geral</span></Link>
           <Link className="nav-entry selected" href="/clientes"><span className="nav-number">02</span><span className="nav-name">Clientes</span><VyraStar className="nav-star" /></Link>
-          {[[ "03", "Conteúdo" ], [ "04", "Aprovações" ], [ "05", "Arquivos" ], [ "06", "Financeiro" ]].map(([number, label]) => (
+          {[[ "04", "Aprovações" ], [ "05", "Arquivos" ], [ "06", "Financeiro" ]].map(([number, label]) => (
             <div className="nav-entry disabled" key={number}><span className="nav-number">{number}</span><span className="nav-name">{label}</span><span className="nav-status">Em breve</span></div>
           ))}
         </nav>
