@@ -102,3 +102,34 @@ button,input,textarea{font:inherit}
 @media(max-width:900px){.vyra-dashboard{grid-template-columns:205px minmax(0,1fr)}.vyra-sidebar{padding:28px 16px}.hero-symbol-wrap{width:150px;height:150px;flex-basis:150px;margin-left:8px}.orbit-one{width:130px;height:130px}.orbit-two{width:160px;height:75px}.hero-star{width:70px;height:70px}}
 @media(max-width:680px){.vyra-dashboard{display:block}.vyra-sidebar{min-height:0;padding:20px 18px 14px;border-right:0;border-bottom:1px solid #25202d}.vyra-wordmark{font-size:27px}.sidebar-kicker{margin:7px 0 0}.sidebar-rule,.sidebar-label,.dashboard-nav,.sidebar-signature{display:none}.dashboard-topbar{height:60px;padding:0 18px}.dashboard-content{padding:36px 18px 24px}.dashboard-hero{min-height:0;padding:30px 0 34px}.dashboard-hero h1{font-size:clamp(37px,10vw,55px)}.hero-symbol-wrap{width:75px;height:75px;flex-basis:75px;margin-left:5px}.orbit-one{width:68px;height:68px}.orbit-two{width:85px;height:38px}.hero-star{width:37px;height:37px}.hero-description{font-size:11px}.dashboard-section-heading{margin-top:29px}.section-caption{display:none}.dashboard-feature{padding:20px 17px;gap:13px}.feature-index{display:none}.feature-copy h3{font-size:17px}.dashboard-footer{font-size:7px;letter-spacing:.1em}}
 @media(max-width:390px){.dashboard-hero{display:block}.hero-symbol-wrap{position:absolute;right:0;top:15px;opacity:.5}.dashboard-hero h1{font-size:40px}.dashboard-footer{flex-direction:column}}
+
+
+/* Área administrativa: carteira de clientes */
+.dashboard-nav a{text-decoration:none;color:inherit}
+.dashboard-nav a.nav-entry:hover{background:rgba(179,108,255,.08);border-color:rgba(179,108,255,.18)}
+.clients-page-heading{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:40px 0 45px;border-bottom:1px solid #2a2431}
+.clients-page-heading h1{font:400 clamp(42px,5vw,66px)/.99 'Anton',sans-serif;letter-spacing:.015em;margin:0;color:#fff}
+.clients-page-heading h1 em{font-style:normal;color:var(--purple-bright)}
+.clients-total{width:150px;height:150px;flex:0 0 150px;border:1px solid rgba(179,108,255,.25);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:radial-gradient(circle,rgba(179,108,255,.1),transparent 70%)}
+.clients-total svg{width:17px;height:17px;color:var(--purple)}
+.clients-total strong{font:400 42px 'Anton',sans-serif;color:#fff}
+.clients-total span{font:700 7px 'Montserrat',sans-serif;letter-spacing:.14em;color:#a99fb1}
+.clients-list{display:grid;gap:12px}
+.managed-client-card{display:flex;align-items:center;gap:22px;padding:25px 27px;background:linear-gradient(110deg,#17131e,#100e15 72%);border:1px solid #34283f;border-radius:7px}
+.managed-client-number{font:400 31px 'Anton',sans-serif;color:#765c8e;min-width:34px}
+.managed-client-main{min-width:0;flex:1}
+.managed-client-main h3{font:700 23px 'League Spartan',sans-serif;margin:7px 0 5px}
+.managed-client-main p{font:400 11px/1.7 'Montserrat',sans-serif;color:#a69bad;margin:0}
+.managed-client-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px}
+.managed-client-meta span{font:600 8px 'Montserrat',sans-serif;letter-spacing:.08em;color:#a98bbf}
+.managed-client-action{display:flex;align-items:center;gap:8px;align-self:flex-start;padding-top:5px}
+.managed-client-action small{font:700 8px 'Montserrat',sans-serif;letter-spacing:.13em;color:#a69bad}
+.client-active-dot{width:7px;height:7px;border-radius:50%;background:#b78aff;box-shadow:0 0 10px rgba(183,138,255,.6)}
+.clients-empty{padding:38px 25px;text-align:center;border:1px dashed #40334d;border-radius:7px;color:#a69bad}
+.clients-empty svg{width:25px;height:25px;color:var(--purple)}
+.clients-empty h3{font:700 18px 'League Spartan',sans-serif;color:#fff;margin:13px 0 7px}
+.clients-empty p,.clients-note p{font:400 10px/1.8 'Montserrat',sans-serif;color:#a69bad}
+.clients-note{display:flex;align-items:center;gap:13px;margin-top:18px;padding:15px 18px;border:1px solid #292330;background:#0f0d14}
+.clients-note svg{width:16px;height:16px;flex:0 0 16px;color:var(--purple)}
+.clients-note p{margin:0}
+@media(max-width:680px){.clients-page-heading{padding:30px 0 35px}.clients-page-heading h1{font-size:clamp(39px,10vw,54px)}.clients-total{width:92px;height:92px;flex-basis:92px}.clients-total strong{font-size:29px}.clients-total span{font-size:5px;text-align:center}.managed-client-card{gap:12px;padding:19px 15px}.managed-client-number{font-size:24px;min-width:23px}.managed-client-main h3{font-size:19px}.managed-client-action{display:none}}
