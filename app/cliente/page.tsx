@@ -225,13 +225,27 @@ export default function ClientHomePage() {
               <span className="client-home-module-description">Revise conteúdos e envie solicitações de ajustes.</span>
               <span className="client-home-module-action">ACESSAR <b>↗</b></span>
             </a>
-            <div className="client-home-module">
+            <a className="client-home-module client-home-module-active" href="/cliente/arquivos">
               <span className="client-home-module-number">04</span>
               <span className="client-home-module-icon">⌑</span>
               <strong>Arquivos e entregas</strong>
               <span className="client-home-module-description">Encontre materiais e arquivos da sua empresa.</span>
-              <span className="client-home-module-status">EM PREPARAÇÃO</span>
-            </div>
+              <span className="client-home-module-action">ACESSAR <b>↗</b></span>
+            </a>
+            <a className="client-home-module client-home-module-active" href="/cliente/financeiro">
+              <span className="client-home-module-number">05</span>
+              <span className="client-home-module-icon">＄</span>
+              <strong>Financeiro</strong>
+              <span className="client-home-module-description">Consulte seu pacote, pagamentos e histórico financeiro.</span>
+              <span className="client-home-module-action">ACESSAR <b>↗</b></span>
+            </a>
+            <a className="client-home-module client-home-module-active" href="/cliente/portfolio">
+              <span className="client-home-module-number">06</span>
+              <span className="client-home-module-icon">✦</span>
+              <strong>Portfólio VYRA</strong>
+              <span className="client-home-module-description">Descubra serviços que podem complementar sua marca.</span>
+              <span className="client-home-module-action">CONHECER <b>↗</b></span>
+            </a>
           </div>
         </section>
 
