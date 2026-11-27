@@ -175,14 +175,6 @@ export default function ClientHomePage() {
       className="client-home-shell client-home-redesigned"
       style={{ "--client-accent": client?.brand_color || "#B7A0A2" } as React.CSSProperties}
     >
-      <header className="client-home-header">
-        <a className="client-home-identity" href="/cliente" aria-label="Página inicial da empresa">
-          {logoUrl ? <img src={logoUrl} alt={`Logo de ${client?.name}`} /> : <span>{client?.name}</span>}
-          <span className="client-home-identity-name">{client?.name}</span>
-        </a>
-        <button className="client-home-signout" onClick={signOut}>Sair da conta <span>↗</span></button>
-      </header>
-
       <div className="client-home-content">
         <section className="client-welcome-panel">
           <div className="client-welcome-copy">
