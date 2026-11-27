@@ -177,3 +177,19 @@ button,input,textarea{font:inherit}
 .user-feedback{margin:18px 0}
 @media(max-width:850px){.user-row-manage{align-items:flex-start}.user-actions{width:100%;justify-content:flex-start;margin-left:42px}}
 @media(max-width:600px){.user-actions{margin-left:0}.user-action{padding:8px;font-size:7px}}
+
+
+/* Módulo de conteúdo e calendário editorial */
+.user-admin-form select,.user-admin-form textarea,.content-filter,.status-control select{width:100%;background:#211d29;border:1px solid #45394f;color:#fff;border-radius:7px;padding:12px;font:400 12px 'Montserrat',sans-serif}
+.user-admin-form textarea{resize:vertical;line-height:1.7}
+.user-admin-form select:focus,.user-admin-form textarea:focus,.user-admin-form input:focus,.content-filter:focus,.status-control select:focus{outline:1px solid var(--purple);border-color:var(--purple)}
+.content-filter{width:auto;min-width:190px;padding:10px 12px}
+.content-post-list{display:grid;gap:12px}
+.content-post{padding:22px 24px;background:linear-gradient(110deg,#17131e,#100e15 72%);border:1px solid #34283f;border-radius:7px}
+.content-post-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.content-post h3{font:700 20px 'League Spartan',sans-serif;margin:13px 0 7px}
+.content-post-meta{font:600 9px 'Montserrat',sans-serif;letter-spacing:.08em;color:#a98bbf;margin:0}
+.content-post-caption{font:400 11px/1.8 'Montserrat',sans-serif;color:#b7adbf;white-space:pre-wrap;margin:14px 0}
+.status-control{display:flex;align-items:center;gap:12px;max-width:380px;margin-top:18px;font:700 9px 'Montserrat',sans-serif;letter-spacing:.1em;color:#b8a9c5}
+.status-control select{flex:1}
+@media(max-width:680px){.content-filter{width:100%;min-width:0}.dashboard-section-heading:has(.content-filter){align-items:stretch;flex-direction:column}.content-post{padding:18px 15px}.status-control{align-items:flex-start;flex-direction:column}.status-control select{width:100%}}
