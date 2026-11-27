@@ -14,6 +14,10 @@ type Post = {
   format: string | null;
   scheduled_for: string | null;
   status: "draft" | "pending" | "approved" | "changes_requested" | "published";
+  media_path: string | null;
+  media_type: string | null;
+  media_name: string | null;
+  media_url?: string | null;
 };
 const statusLabels: Record<Post["status"], string> = {
   draft: "Rascunho",
@@ -36,6 +40,16 @@ export default function ContentPage() {
   const [format, setFormat] = useState("Reels");
   const [scheduledFor, setScheduledFor] = useState("");
   const [clientId, setClientId] = useState("");
+  const [mediaFile, setMediaFile] = useState<File | null>(null);
+
+  async function attachSignedUrls(rows: Post[]) {
+    const supabase = supabaseBrowser();
+    return Promise.all(rows.map(async post => {
+      if (!post.media_path) return post;
+      const { data } = await supabase.storage.from("client-content").createSignedUrl(post.media_path, 3600);
+      return { ...post, media_url: data?.signedUrl ?? null };
+    }));
+  }
 
   useEffect(() => {
     let active = true;
@@ -47,12 +61,12 @@ export default function ContentPage() {
       if (profile?.role !== "admin") { router.replace(profile?.role === "client" ? "/cliente" : "/login"); return; }
       const [{ data: clientRows, error: clientError }, { data: postRows, error: postError }] = await Promise.all([
         supabase.from("clients").select("id,name").order("name"),
-        supabase.from("posts").select("id,client_id,title,caption,format,scheduled_for,status").order("scheduled_for", { ascending: true }),
+        supabase.from("posts").select("id,client_id,title,caption,format,scheduled_for,status,media_path,media_type,media_name").order("scheduled_for", { ascending: true }),
       ]);
       if (!active) return;
       if (clientError || postError) setFeedback("Não foi possível carregar os dados. Atualize a página e tente novamente.");
       setClients(clientRows ?? []);
-      setPosts(postRows ?? []);
+      setPosts(await attachSignedUrls((postRows ?? []) as Post[]));
       setClientId(clientRows?.[0]?.id ?? "");
       setLoading(false);
     }
@@ -61,6 +75,23 @@ export default function ContentPage() {
   }, [router]);
 
   const visiblePosts = useMemo(() => posts.filter(post => selectedClient === "all" || post.client_id === selectedClient), [posts, selectedClient]);
+
+  function chooseFile(file: File | null) {
+    setFeedback("");
+    if (!file) { setMediaFile(null); return; }
+    const allowed = ["image/jpeg", "image/png", "image/webp", "video/mp4", "video/quicktime", "video/webm"];
+    if (!allowed.includes(file.type)) {
+      setMediaFile(null);
+      setFeedback("Formato não permitido. Envie JPG, PNG, WEBP, MP4, MOV ou WEBM.");
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      setMediaFile(null);
+      setFeedback("O arquivo ultrapassa o limite de 50 MB.");
+      return;
+    }
+    setMediaFile(file);
+  }
 
   async function createPost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -74,13 +105,42 @@ export default function ContentPage() {
       format,
       scheduled_for: scheduledFor || null,
       status: "draft",
-    }).select("id,client_id,title,caption,format,scheduled_for,status").single();
-    if (error || !data) setFeedback(error?.message || "Não foi possível criar a publicação.");
-    else {
-      setPosts(current => [...current, data].sort((a,b) => (a.scheduled_for || "9999").localeCompare(b.scheduled_for || "9999")));
-      setTitle(""); setCaption(""); setScheduledFor("");
-      setFeedback("Publicação cadastrada como rascunho.");
+    }).select("id,client_id,title,caption,format,scheduled_for,status,media_path,media_type,media_name").single();
+    if (error || !data) {
+      setFeedback("Não foi possível criar a publicação. Confira os dados e tente novamente.");
+      setSaving(false);
+      return;
     }
+
+    let newPost = data as Post;
+    if (mediaFile) {
+      const safeName = mediaFile.name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]/g, "_").slice(-100) || "arquivo";
+      const path = `${clientId}/${data.id}/${Date.now()}-${safeName}`;
+      const { error: uploadError } = await supabase.storage.from("client-content").upload(path, mediaFile, { contentType: mediaFile.type, upsert: false });
+      if (uploadError) {
+        setFeedback("A publicação foi criada, mas o anexo não foi enviado. Tente novamente.");
+        setPosts(current => [...current, newPost]);
+        setSaving(false);
+        return;
+      }
+      const { error: updateError } = await supabase.from("posts").update({
+        media_path: path, media_type: mediaFile.type, media_name: mediaFile.name,
+      }).eq("id", data.id);
+      if (updateError) {
+        setFeedback("O arquivo foi enviado, mas não foi possível vinculá-lo à publicação.");
+        setPosts(current => [...current, newPost]);
+        setSaving(false);
+        return;
+      }
+      const { data: signed } = await supabase.storage.from("client-content").createSignedUrl(path, 3600);
+      newPost = { ...newPost, media_path: path, media_type: mediaFile.type, media_name: mediaFile.name, media_url: signed?.signedUrl ?? null };
+    }
+
+    setPosts(current => [...current, newPost].sort((a,b) => (a.scheduled_for || "9999").localeCompare(b.scheduled_for || "9999")));
+    setTitle(""); setCaption(""); setScheduledFor(""); setMediaFile(null);
+    const fileInput = document.getElementById("content-media-file") as HTMLInputElement | null;
+    if (fileInput) fileInput.value = "";
+    setFeedback("Publicação cadastrada como rascunho" + (newPost.media_path ? " com anexo." : "."));
     setSaving(false);
   }
 
@@ -124,7 +184,10 @@ export default function ContentPage() {
           <label>Formato<select value={format} onChange={e=>setFormat(e.target.value)}><option>Reels</option><option>Carrossel</option><option>Post estático</option><option>Stories</option><option>Vídeo</option><option>Outro</option></select></label>
           <label>Data prevista<input type="date" value={scheduledFor} onChange={e=>setScheduledFor(e.target.value)}/></label>
           <label>Legenda / briefing<textarea rows={4} value={caption} onChange={e=>setCaption(e.target.value)} placeholder="Escreva a legenda ou orientações da publicação."/></label>
-          <p className="user-form-note">A publicação será criada como rascunho. Você poderá organizar o status nesta mesma página.</p>
+          <label>Anexar foto ou vídeo<input id="content-media-file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm" onChange={e=>chooseFile(e.target.files?.[0] ?? null)}/></label>
+          <p className="user-form-note">Formatos aceitos: JPG, PNG, WEBP, MP4, MOV e WEBM. Limite de 50 MB por arquivo. O anexo ficará privado e vinculado à empresa selecionada.</p>
+          {mediaFile && <div className="content-file-preview"><strong>Arquivo selecionado:</strong> {mediaFile.name} ({(mediaFile.size / (1024 * 1024)).toFixed(1)} MB)</div>}
+          <p className="user-form-note">A publicação será criada como rascunho. Depois, você poderá encaminhá-la para aprovação do cliente.</p>
           <button className="button" disabled={saving || clients.length===0}>{saving ? "Salvando..." : "Cadastrar publicação"}</button>
         </form>
         <div className="dashboard-section-heading"><div><p className="section-index">02 — CALENDÁRIO EDITORIAL</p><h2>Publicações cadastradas<span>.</span></h2></div><select className="content-filter" value={selectedClient} onChange={e=>setSelectedClient(e.target.value)}><option value="all">Todas as empresas</option>{clients.map(client=><option key={client.id} value={client.id}>{client.name}</option>)}</select></div>
@@ -132,6 +195,7 @@ export default function ContentPage() {
           <div className="content-post-top"><span className="feature-tag">{clients.find(c=>c.id===post.client_id)?.name ?? "Empresa"}</span><span className="pill">{statusLabels[post.status]}</span></div>
           <h3>{post.title}</h3><p className="content-post-meta">{post.format || "Formato não definido"} · {post.scheduled_for ? new Date(post.scheduled_for+"T12:00:00").toLocaleDateString("pt-BR") : "Sem data definida"}</p>
           {post.caption && <p className="content-post-caption">{post.caption}</p>}
+          {post.media_path && <div className="content-post-media"><p><strong>Anexo:</strong> {post.media_name || "Arquivo"}</p>{post.media_url ? (post.media_type?.startsWith("video/") ? <video src={post.media_url} controls /> : <a href={post.media_url} target="_blank" rel="noreferrer"><img src={post.media_url} alt={post.media_name || "Anexo da publicação"}/></a>) : <p>Prévia indisponível no momento.</p>}</div>}
           <label className="status-control">Status<select value={post.status} onChange={e=>updateStatus(post,e.target.value as Post["status"])}>{Object.entries(statusLabels).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
         </article>)}</div>}
         <footer className="dashboard-footer"><span>VYRA MÍDIA © 2026</span><span>MENOS DO MESMO. <b>MAIS IMPACTO.</b></span></footer>
