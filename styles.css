@@ -367,3 +367,53 @@ button,input,textarea{font:inherit}
   color:#f5eeee;
   cursor:pointer;
 }
+
+/* Página inicial do cliente: layout aplicado à identidade visual da empresa */
+.client-home-redesigned{width:100%;max-width:none;min-height:100vh;margin:0;padding:0 clamp(18px,5vw,76px) 64px;background:var(--client-background,#050505);color:#f5eeee}
+.client-home-header{min-height:86px;max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid color-mix(in srgb,var(--client-accent) 32%,#292124)}
+.client-home-identity{display:flex;align-items:center;gap:15px;min-width:0;text-decoration:none;color:#f5eeee}
+.client-home-identity img{max-width:118px;max-height:52px;object-fit:contain}
+.client-home-identity-name{font:500 9px 'Montserrat',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#a99799}
+.client-home-identity:has(img) .client-home-identity-name{display:none}
+.client-home-signout{border:1px solid color-mix(in srgb,var(--client-accent) 55%,#33282a);background:transparent;color:#e8dfe0;padding:10px 14px;border-radius:2px;font:600 8px 'Montserrat',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.client-home-signout span{color:var(--client-accent);margin-left:7px}
+.client-home-content{max-width:1320px;margin:0 auto}
+.client-welcome-panel{position:relative;min-height:330px;margin:42px 0 72px;padding:clamp(28px,5vw,66px);display:flex;align-items:center;justify-content:space-between;gap:30px;overflow:hidden;background:linear-gradient(115deg,var(--client-surface,#100c0d),#090708 72%);border:1px solid color-mix(in srgb,var(--client-accent) 30%,#21191b)}
+.client-welcome-panel:after{content:"";position:absolute;width:340px;height:340px;right:7%;top:50%;transform:translateY(-50%);border:1px solid color-mix(in srgb,var(--client-accent) 16%,transparent);border-radius:50%;box-shadow:0 0 0 35px color-mix(in srgb,var(--client-accent) 3%,transparent),0 0 0 75px color-mix(in srgb,var(--client-accent) 2%,transparent);pointer-events:none}
+.client-welcome-copy{position:relative;z-index:1;max-width:680px}
+.client-home-kicker{margin:0 0 16px;color:var(--client-accent);font:700 8px 'Montserrat',sans-serif;letter-spacing:.24em}
+.client-welcome-copy h1{margin:0;color:#f5eeee;font:400 clamp(38px,6vw,70px)/1.02 'DM Serif Display',Georgia,serif}
+.client-welcome-copy h1 em{color:var(--client-accent);font-weight:400}
+.client-welcome-copy>p:last-child{max-width:570px;margin:22px 0 0;color:#bbaeb0;font:400 11px/1.9 'Montserrat',sans-serif}
+.client-welcome-mark{position:relative;z-index:1;flex:0 0 190px;width:190px;height:190px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--client-accent) 35%,#332629);border-radius:50%;background:color-mix(in srgb,var(--client-accent) 5%,transparent)}
+.client-welcome-mark img{max-width:72%;max-height:72%;object-fit:contain}
+.client-welcome-mark span{font:400 76px 'DM Serif Display',serif;color:var(--client-accent)}
+.client-home-section{margin-bottom:72px}
+.client-home-section-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.client-home-section-heading .client-home-kicker{margin-bottom:9px}
+.client-home-section-heading h2,.client-brand-settings h2{margin:0;color:#f5eeee;font:400 clamp(26px,3vw,38px) 'DM Serif Display',Georgia,serif}
+.client-home-section-number{color:#796c6e;font:600 8px 'Montserrat',sans-serif;letter-spacing:.15em}
+.client-home-modules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.client-home-module{position:relative;min-height:245px;padding:23px 19px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:13px;background:#0c090a;border:1px solid #2a2022;color:#f5eeee;text-decoration:none;transition:border-color .2s,transform .2s}
+.client-home-module-active{border-color:color-mix(in srgb,var(--client-accent) 48%,#302426)}
+.client-home-module-active:hover{border-color:var(--client-accent);transform:translateY(-3px)}
+.client-home-module-number{position:absolute;top:18px;right:18px;color:#6f6264;font:600 8px 'Montserrat',sans-serif}
+.client-home-module-icon{margin-top:15px;color:var(--client-accent);font:400 27px Georgia,serif}
+.client-home-module strong{font:400 19px 'DM Serif Display',Georgia,serif}
+.client-home-module-description{color:#a99b9d;font:400 9px/1.8 'Montserrat',sans-serif}
+.client-home-module-action,.client-home-module-status{margin-top:auto;padding-top:15px;color:var(--client-accent);font:700 7px 'Montserrat',sans-serif;letter-spacing:.13em}
+.client-home-module-action b{margin-left:7px;font-size:12px}
+.client-home-module-status{color:#76696b}
+.client-brand-settings{display:flex;align-items:center;justify-content:space-between;gap:35px;padding:28px 0;border-top:1px solid #2a2022;border-bottom:1px solid #2a2022}
+.client-brand-settings>div:first-child{max-width:570px}
+.client-brand-settings .client-home-kicker{margin-bottom:9px}
+.client-brand-settings>div:first-child>p:last-child{margin:12px 0 0;color:#a99b9d;font:400 9px/1.8 'Montserrat',sans-serif}
+.client-logo-control{min-width:240px;display:grid;justify-items:start;gap:8px}
+.client-logo-preview{width:100px;height:64px;display:grid;place-items:center;background:#0c090a;border:1px solid #302426;color:#786a6c;font:600 7px 'Montserrat',sans-serif;letter-spacing:.15em}
+.client-logo-preview img{max-width:90%;max-height:90%;object-fit:contain}
+.client-logo-upload-button{display:inline-flex;align-items:center;justify-content:center;padding:11px 15px;background:var(--client-accent);color:#100b0c;cursor:pointer;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em}
+.client-logo-control input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.client-logo-control small{color:#847779;font:400 8px 'Montserrat',sans-serif}
+.client-logo-control .client-logo-feedback{color:var(--client-accent)}
+@media(max-width:900px){.client-home-modules{grid-template-columns:repeat(2,minmax(0,1fr))}.client-welcome-mark{flex-basis:140px;width:140px;height:140px}}
+@media(max-width:600px){.client-home-redesigned{padding:0 15px 40px}.client-home-header{min-height:70px}.client-home-identity img{max-width:90px;max-height:42px}.client-home-identity-name{font-size:7px}.client-home-signout{padding:9px}.client-welcome-panel{min-height:0;margin:24px 0 48px;padding:28px 22px}.client-welcome-mark{display:none}.client-welcome-copy h1{font-size:43px}.client-home-section{margin-bottom:48px}.client-home-section-heading{align-items:flex-start}.client-home-modules{grid-template-columns:1fr 1fr;gap:7px}.client-home-module{min-height:220px;padding:17px 13px}.client-home-module strong{font-size:16px}.client-home-module-description{font-size:8px}.client-brand-settings{align-items:flex-start;flex-direction:column}.client-logo-control{min-width:0}}
