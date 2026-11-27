@@ -105,6 +105,12 @@ export default function DashboardPage() {
                 <span className="nav-name">{label}</span>
                 <span className="nav-status">Abrir</span>
               </a>
+            ) : index === 2 ? (
+              <a className="nav-entry" href="/conteudo" key={number}>
+                <span className="nav-number">{number}</span>
+                <span className="nav-name">{label}</span>
+                <span className="nav-status">Abrir</span>
+              </a>
             ) : (
               <div className={index === 0 ? "nav-entry selected" : "nav-entry disabled"} key={number}>
                 <span className="nav-number">{number}</span>
