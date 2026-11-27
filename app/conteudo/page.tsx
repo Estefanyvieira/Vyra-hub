@@ -41,6 +41,7 @@ export default function ContentPage() {
   const [scheduledFor, setScheduledFor] = useState("");
   const [clientId, setClientId] = useState("");
   const [mediaFile, setMediaFile] = useState<File | null>(null);
+  const [calendarMonth, setCalendarMonth] = useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1));
 
   async function attachSignedUrls(rows: Post[]) {
     const supabase = supabaseBrowser();
@@ -75,6 +76,42 @@ export default function ContentPage() {
   }, [router]);
 
   const visiblePosts = useMemo(() => posts.filter(post => selectedClient === "all" || post.client_id === selectedClient), [posts, selectedClient]);
+
+  const calendarCells = useMemo(() => {
+    const year = calendarMonth.getFullYear();
+    const month = calendarMonth.getMonth();
+    const firstWeekday = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const totalCells = Math.ceil((firstWeekday + daysInMonth) / 7) * 7;
+    return Array.from({ length: totalCells }, (_, index) => {
+      const day = index - firstWeekday + 1;
+      return day > 0 && day <= daysInMonth ? new Date(year, month, day) : null;
+    });
+  }, [calendarMonth]);
+
+  const postsByDate = useMemo(() => {
+    const grouped: Record<string, Post[]> = {};
+    visiblePosts.forEach(post => {
+      if (!post.scheduled_for) return;
+      grouped[post.scheduled_for] ??= [];
+      grouped[post.scheduled_for].push(post);
+    });
+    return grouped;
+  }, [visiblePosts]);
+
+  function dateKey(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function calendarPostClass(status: Post["status"]) {
+    if (status === "pending" || status === "changes_requested") return "calendar-event calendar-event-pending";
+    if (status === "approved") return "calendar-event calendar-event-approved";
+    if (status === "published") return "calendar-event calendar-event-published";
+    return "calendar-event calendar-event-draft";
+  }
 
   function chooseFile(file: File | null) {
     setFeedback("");
@@ -191,6 +228,38 @@ export default function ContentPage() {
           <button className="button" disabled={saving || clients.length===0}>{saving ? "Salvando..." : "Cadastrar publicação"}</button>
         </form>
         <div className="dashboard-section-heading"><div><p className="section-index">02 — CALENDÁRIO EDITORIAL</p><h2>Publicações cadastradas<span>.</span></h2></div><select className="content-filter" value={selectedClient} onChange={e=>setSelectedClient(e.target.value)}><option value="all">Todas as empresas</option>{clients.map(client=><option key={client.id} value={client.id}>{client.name}</option>)}</select></div>
+        <div className="editorial-calendar">
+          <div className="calendar-heading">
+            <div><p className="section-index">AGENDA DE POSTAGENS</p><h3>{calendarMonth.toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}</h3></div>
+            <div className="calendar-navigation">
+              <button type="button" aria-label="Mês anterior" onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1))}>‹</button>
+              <button type="button" onClick={() => setCalendarMonth(new Date(new Date().getFullYear(), new Date().getMonth(), 1))}>Hoje</button>
+              <button type="button" aria-label="Próximo mês" onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1))}>›</button>
+            </div>
+          </div>
+          <div className="calendar-legend">
+            <span><i className="legend-dot legend-red" />Aguardando aprovação / ajustes</span>
+            <span><i className="legend-dot legend-green" />Aprovado</span>
+            <span><i className="legend-dot legend-purple" />Publicado</span>
+            <span><i className="legend-dot legend-muted" />Rascunho</span>
+          </div>
+          <div className="calendar-grid">
+            {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(day => <div className="calendar-weekday" key={day}>{day}</div>)}
+            {calendarCells.map((date, index) => {
+              const key = date ? dateKey(date) : `empty-${index}`;
+              const dayPosts = date ? (postsByDate[dateKey(date)] ?? []) : [];
+              const today = date && dateKey(date) === dateKey(new Date());
+              return <div className={`calendar-day${date ? "" : " calendar-day-empty"}${today ? " calendar-day-today" : ""}`} key={key}>
+                {date && <><span className="calendar-day-number">{date.getDate()}</span><div className="calendar-day-events">
+                  {dayPosts.map(post => <div className={calendarPostClass(post.status)} key={post.id} title={`${post.title} — ${statusLabels[post.status]}`}>
+                    <strong>{post.title}</strong><small>{post.status === "pending" ? "Aguardando aprovação" : post.status === "changes_requested" ? "Ajustes solicitados" : statusLabels[post.status]}</small>
+                  </div>)}
+                </div></>}
+              </div>;
+            })}
+          </div>
+          <p className="calendar-note">As publicações com data prevista aparecem automaticamente neste calendário. Ao mudar o status, a cor é atualizada.</p>
+        </div>
         {visiblePosts.length===0 ? <div className="clients-empty"><h3>Nenhuma publicação por aqui ainda.</h3><p>Cadastre a primeira publicação usando o formulário acima.</p></div> : <div className="content-post-list">{visiblePosts.map(post=><article className="content-post" key={post.id}>
           <div className="content-post-top"><span className="feature-tag">{clients.find(c=>c.id===post.client_id)?.name ?? "Empresa"}</span><span className="pill">{statusLabels[post.status]}</span></div>
           <h3>{post.title}</h3><p className="content-post-meta">{post.format || "Formato não definido"} · {post.scheduled_for ? new Date(post.scheduled_for+"T12:00:00").toLocaleDateString("pt-BR") : "Sem data definida"}</p>
