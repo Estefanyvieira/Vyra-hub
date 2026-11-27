@@ -105,6 +105,7 @@ export default function ClientWorkspacePreviewPage() {
             <p className="hero-description">{client.welcome_message || "Este é o espaço da empresa na VYRA HUB. Aqui serão reunidos conteúdos, projetos e materiais."}</p>
             {client.service_summary && <p className="muted">{client.service_summary}</p>}
           </div>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 26 }}><Link className="button" href={`/clientes/${client.id}/usuarios`}>Gerenciar usuários</Link><Link className="button" href="/clientes" style={{ background: "transparent", color: "#e8d9f4", border: "1px solid #5c456f" }}>Voltar aos clientes</Link></div>
           <div className="dashboard-section-heading">
             <div><p className="section-index">01 — ÁREA DA EMPRESA</p><h2>Próximos passos<span>.</span></h2></div>
             <span className="section-caption">VISUALIZAÇÃO ADMINISTRATIVA</span>
