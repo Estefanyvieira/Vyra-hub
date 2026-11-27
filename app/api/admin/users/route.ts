@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
   const { data: profiles, error: profilesError } = await adminClient
     .from("profiles").select("id, full_name, created_at").eq("client_id", clientId).eq("role", "client").order("created_at", { ascending: true });
-  if (profilesError) return response("Não foi possível carregar os usuários desta empresa.", 500);
+  if (profilesError) return response(`Falha ao consultar os usuários: ${profilesError.code || "sem código"} — ${profilesError.message}`, 500);
 
   const users = await Promise.all((profiles || []).map(async (profile) => {
     const { data } = await adminClient.auth.admin.getUserById(profile.id);
