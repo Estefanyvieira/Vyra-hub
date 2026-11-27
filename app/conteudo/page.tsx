@@ -107,7 +107,8 @@ export default function ContentPage() {
   }
 
   function calendarPostClass(status: Post["status"]) {
-    if (status === "pending" || status === "changes_requested") return "calendar-event calendar-event-pending";
+    if (status === "pending") return "calendar-event calendar-event-pending";
+    if (status === "changes_requested") return "calendar-event calendar-event-changes";
     if (status === "approved") return "calendar-event calendar-event-approved";
     if (status === "published") return "calendar-event calendar-event-published";
     return "calendar-event calendar-event-draft";
@@ -141,7 +142,7 @@ export default function ContentPage() {
       caption: caption.trim() || null,
       format,
       scheduled_for: scheduledFor || null,
-      status: "draft",
+      status: "pending",
     }).select("id,client_id,title,caption,format,scheduled_for,status,media_path,media_type,media_name").single();
     if (error || !data) {
       setFeedback("Não foi possível criar a publicação. Confira os dados e tente novamente.");
@@ -177,7 +178,7 @@ export default function ContentPage() {
     setTitle(""); setCaption(""); setScheduledFor(""); setMediaFile(null);
     const fileInput = document.getElementById("content-media-file") as HTMLInputElement | null;
     if (fileInput) fileInput.value = "";
-    setFeedback("Publicação cadastrada como rascunho" + (newPost.media_path ? " com anexo." : "."));
+    setFeedback("Publicação enviada automaticamente para aprovação" + (newPost.media_path ? " com anexo." : "."));
     setSaving(false);
   }
 
@@ -224,7 +225,7 @@ export default function ContentPage() {
           <label>Anexar foto ou vídeo<input id="content-media-file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm" onChange={e=>chooseFile(e.target.files?.[0] ?? null)}/></label>
           <p className="user-form-note">Formatos aceitos: JPG, PNG, WEBP, MP4, MOV e WEBM. Limite de 50 MB por arquivo. O anexo ficará privado e vinculado à empresa selecionada.</p>
           {mediaFile && <div className="content-file-preview"><strong>Arquivo selecionado:</strong> {mediaFile.name} ({(mediaFile.size / (1024 * 1024)).toFixed(1)} MB)</div>}
-          <p className="user-form-note">A publicação será criada como rascunho. Depois, você poderá encaminhá-la para aprovação do cliente.</p>
+          <p className="user-form-note">Ao cadastrar, a publicação será enviada automaticamente para aprovação do cliente e aparecerá em vermelho no calendário.</p>
           <button className="button" disabled={saving || clients.length===0}>{saving ? "Salvando..." : "Cadastrar publicação"}</button>
         </form>
         <div className="dashboard-section-heading"><div><p className="section-index">02 — CALENDÁRIO EDITORIAL</p><h2>Publicações cadastradas<span>.</span></h2></div><select className="content-filter" value={selectedClient} onChange={e=>setSelectedClient(e.target.value)}><option value="all">Todas as empresas</option>{clients.map(client=><option key={client.id} value={client.id}>{client.name}</option>)}</select></div>
@@ -238,7 +239,8 @@ export default function ContentPage() {
             </div>
           </div>
           <div className="calendar-legend">
-            <span><i className="legend-dot legend-red" />Aguardando aprovação / ajustes</span>
+            <span><i className="legend-dot legend-red" />Aguardando aprovação</span>
+            <span><i className="legend-dot legend-orange" />Alteração solicitada · alerta</span>
             <span><i className="legend-dot legend-green" />Aprovado</span>
             <span><i className="legend-dot legend-purple" />Publicado</span>
             <span><i className="legend-dot legend-muted" />Rascunho</span>
@@ -252,7 +254,7 @@ export default function ContentPage() {
               return <div className={`calendar-day${date ? "" : " calendar-day-empty"}${today ? " calendar-day-today" : ""}`} key={key}>
                 {date && <><span className="calendar-day-number">{date.getDate()}</span><div className="calendar-day-events">
                   {dayPosts.map(post => <div className={calendarPostClass(post.status)} key={post.id} title={`${post.title} — ${statusLabels[post.status]}`}>
-                    <strong>{post.title}</strong><small>{post.status === "pending" ? "Aguardando aprovação" : post.status === "changes_requested" ? "Ajustes solicitados" : statusLabels[post.status]}</small>
+                    <strong>{post.title}</strong><small>{post.status === "pending" ? "Aguardando aprovação" : post.status === "changes_requested" ? "ALTERAÇÃO NECESSÁRIA" : statusLabels[post.status]}</small>
                   </div>)}
                 </div></>}
               </div>;
