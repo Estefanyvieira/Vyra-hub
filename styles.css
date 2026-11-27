@@ -473,3 +473,10 @@ button,input,textarea{font:inherit}
 .client-approvals-empty h2{font:400 22px 'DM Serif Display',Georgia,serif}
 .client-approvals-empty p,.client-approvals-error{font:400 11px/1.8 'Montserrat',sans-serif;color:#b9afb1}
 @media(max-width:600px){.client-approvals-page{padding:30px 16px 50px}.client-approvals-heading{align-items:flex-start}.client-approvals-count{width:82px;height:82px;flex-basis:82px}.client-approvals-count strong{font-size:26px}.client-approvals-count span{font-size:6px}.client-approval-actions{flex-direction:column}.client-approval-actions button{width:100%}}
+
+
+/* Visualização de aprovação: reduzir ações comuns de cópia e impressão */
+.client-approvals-page,.client-approvals-page *{-webkit-user-select:none;user-select:none}
+.client-approvals-page img,.client-approvals-page video{-webkit-user-drag:none;user-select:none}
+.client-approvals-page .client-approval-media{pointer-events:auto}
+@media print{.client-approvals-page{display:none!important}}
