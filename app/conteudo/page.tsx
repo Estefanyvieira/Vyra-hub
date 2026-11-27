@@ -31,7 +31,6 @@ export default function ContentPage() {
   const router = useRouter();
   const [clients, setClients] = useState<Client[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [selectedClient, setSelectedClient] = useState("all");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -75,7 +74,7 @@ export default function ContentPage() {
     return () => { active = false; };
   }, [router]);
 
-  const visiblePosts = useMemo(() => posts.filter(post => selectedClient === "all" || post.client_id === selectedClient), [posts, selectedClient]);
+  const visiblePosts = posts;
 
   const calendarCells = useMemo(() => {
     const year = calendarMonth.getFullYear();
@@ -228,7 +227,7 @@ export default function ContentPage() {
           <p className="user-form-note">Quando houver uma data prevista, a publicação será enviada automaticamente para aprovação e aparecerá em vermelho no calendário. Sem data, ficará como rascunho.</p>
           <button className="button" disabled={saving || clients.length===0}>{saving ? "Salvando..." : "Cadastrar publicação"}</button>
         </form>
-        <div className="dashboard-section-heading"><div><p className="section-index">02 — CALENDÁRIO EDITORIAL</p><h2>Publicações cadastradas<span>.</span></h2></div><select className="content-filter" value={selectedClient} onChange={e=>setSelectedClient(e.target.value)}><option value="all">Todas as empresas</option>{clients.map(client=><option key={client.id} value={client.id}>{client.name}</option>)}</select></div>
+        <div className="dashboard-section-heading"><div><p className="section-index">02 — CALENDÁRIO GERAL DA VYRA</p><h2>Agenda de todos os clientes<span>.</span></h2><p className="hero-description">Todas as publicações reunidas por data, para você acompanhar a operação completa da agência.</p></div></div>
         <div className="editorial-calendar">
           <div className="calendar-heading">
             <div><p className="section-index">AGENDA DE POSTAGENS</p><h3>{calendarMonth.toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}</h3></div>
@@ -254,7 +253,7 @@ export default function ContentPage() {
               return <div className={`calendar-day${date ? "" : " calendar-day-empty"}${today ? " calendar-day-today" : ""}`} key={key}>
                 {date && <><span className="calendar-day-number">{date.getDate()}</span><div className="calendar-day-events">
                   {dayPosts.map(post => <div className={calendarPostClass(post.status)} key={post.id} title={`${post.title} — ${statusLabels[post.status]}`}>
-                    <strong>{post.title}</strong><small>{post.status === "pending" ? "Aguardando aprovação" : post.status === "changes_requested" ? "ALTERAÇÃO NECESSÁRIA" : statusLabels[post.status]}</small>
+                    <strong>{post.title}</strong><small>{clients.find(client=>client.id===post.client_id)?.name ?? "Cliente"} · {post.status === "pending" ? "Aguardando aprovação" : post.status === "changes_requested" ? "ALTERAÇÃO NECESSÁRIA" : statusLabels[post.status]}</small>
                   </div>)}
                 </div></>}
               </div>;
