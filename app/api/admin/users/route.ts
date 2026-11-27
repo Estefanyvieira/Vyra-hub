@@ -163,3 +163,80 @@ export async function POST(request: NextRequest) {
     user: { id: created.user.id, full_name: fullName },
   });
 }
+
+export async function PATCH(request: NextRequest) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  if (!supabaseUrl || !secretKey) return response("A configuração segura do servidor está incompleta.", 500);
+
+  const authorization = request.headers.get("authorization");
+  const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : "";
+  if (!token) return response("Sessão não encontrada. Entre novamente.", 401);
+
+  const adminClient = createClient(supabaseUrl, secretKey, {
+    auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  });
+
+  const { data: authData, error: authError } = await adminClient.auth.getUser(token);
+  if (authError || !authData.user) return response("Sua sessão é inválida ou expirou. Entre novamente.", 401);
+
+  const { data: callerProfile, error: callerError } = await adminClient
+    .from("profiles").select("role").eq("id", authData.user.id).single();
+  if (callerError || callerProfile?.role !== "admin") return response("Apenas a administração da VYRA pode gerenciar usuários.", 403);
+
+  let body: { action?: unknown; userId?: unknown; fullName?: unknown; email?: unknown; password?: unknown; clientId?: unknown; active?: unknown };
+  try {
+    body = await request.json();
+  } catch {
+    return response("Os dados enviados são inválidos.", 400);
+  }
+
+  const action = typeof body.action === "string" ? body.action : "";
+  const userId = typeof body.userId === "string" ? body.userId : "";
+  const clientId = typeof body.clientId === "string" ? body.clientId : "";
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!uuidPattern.test(userId) || !uuidPattern.test(clientId)) return response("Usuário ou empresa inválidos.", 400);
+
+  const { data: targetProfile, error: targetError } = await adminClient
+    .from("profiles").select("id, full_name, role, client_id").eq("id", userId).eq("client_id", clientId).eq("role", "client").maybeSingle();
+  if (targetError || !targetProfile) return response("Este usuário não pertence à empresa selecionada.", 404);
+
+  if (action === "edit") {
+    const fullName = typeof body.fullName === "string" ? body.fullName.trim() : "";
+    const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+    if (!fullName || fullName.length > 120) return response("Informe um nome válido de até 120 caracteres.", 400);
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 254) return response("Informe um e-mail válido.", 400);
+
+    const { error: authUpdateError } = await adminClient.auth.admin.updateUserById(userId, {
+      email,
+      email_confirm: true,
+      user_metadata: { full_name: fullName },
+    });
+    if (authUpdateError) return response(authUpdateError.message, 400);
+
+    const { error: profileUpdateError } = await adminClient.from("profiles")
+      .update({ full_name: fullName }).eq("id", userId).eq("client_id", clientId);
+    if (profileUpdateError) return response("O e-mail foi atualizado, mas não foi possível atualizar o nome do perfil.", 500);
+    return NextResponse.json({ success: true, message: "Dados do usuário atualizados." });
+  }
+
+  if (action === "status") {
+    if (typeof body.active !== "boolean") return response("Informe o status desejado.", 400);
+    const { error: statusError } = await adminClient.auth.admin.updateUserById(userId, {
+      ban_duration: body.active ? "none" : "876000h",
+    });
+    if (statusError) return response(statusError.message, 400);
+    return NextResponse.json({ success: true, message: body.active ? "Acesso reativado." : "Acesso desativado." });
+  }
+
+  if (action === "password") {
+    const password = typeof body.password === "string" ? body.password : "";
+    if (password.length < 8 || password.length > 128) return response("A nova senha deve ter entre 8 e 128 caracteres.", 400);
+    const { error: passwordError } = await adminClient.auth.admin.updateUserById(userId, { password });
+    if (passwordError) return response(passwordError.message, 400);
+    return NextResponse.json({ success: true, message: "Senha redefinida com sucesso." });
+  }
+
+  return response("Ação de gerenciamento desconhecida.", 400);
+}
+
