@@ -17,7 +17,7 @@ function VyraStar({ className = "" }: { className?: string }) {
 const sections = [
   ["01", "Visão geral", "Ativo"],
   ["02", "Clientes", "Em breve"],
-  ["03", "Conteúdo", "Em breve"],
+  ["03", "Conteúdo", "Abrir"],
   ["04", "Aprovações", "Em breve"],
   ["05", "Arquivos", "Em breve"],
   ["06", "Financeiro", "Em breve"],
