@@ -205,13 +205,13 @@ export default function ClientHomePage() {
               <span className="client-home-module-description">Compartilhe informações e detalhes importantes da sua marca.</span>
               <span className="client-home-module-status">EM PREPARAÇÃO</span>
             </div>
-            <div className="client-home-module">
+            <a className="client-home-module client-home-module-active" href="/cliente/aprovacoes">
               <span className="client-home-module-number">03</span>
               <span className="client-home-module-icon">✓</span>
               <strong>Aprovações</strong>
               <span className="client-home-module-description">Revise conteúdos e envie solicitações de ajustes.</span>
-              <span className="client-home-module-status">EM PREPARAÇÃO</span>
-            </div>
+              <span className="client-home-module-action">ACESSAR <b>↗</b></span>
+            </a>
             <div className="client-home-module">
               <span className="client-home-module-number">04</span>
               <span className="client-home-module-icon">⌑</span>
