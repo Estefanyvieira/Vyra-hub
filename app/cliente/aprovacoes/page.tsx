@@ -39,6 +39,15 @@ export default function ClientApprovalsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const blockContextMenu = (event: MouseEvent) => event.preventDefault();
+    const blockDrag = (event: DragEvent) => event.preventDefault();
+    const blockSavePrint = (event: KeyboardEvent) => {
+      const key = event.key.toLowerCase();
+      if ((event.ctrlKey || event.metaKey) && ["s", "p", "u"].includes(key)) event.preventDefault();
+    };
+    document.addEventListener("contextmenu", blockContextMenu);
+    document.addEventListener("dragstart", blockDrag);
+    document.addEventListener("keydown", blockSavePrint);
     let active = true;
     async function load() {
       try {
@@ -60,7 +69,7 @@ export default function ClientApprovalsPage() {
 
         const withUrls = await Promise.all(((rows ?? []) as Post[]).map(async post => {
           if (!post.media_path) return post;
-          const { data } = await supabase.storage.from("client-content").createSignedUrl(post.media_path, 3600);
+          const { data } = await supabase.storage.from("client-content").createSignedUrl(post.media_path, 600);
           return { ...post, media_url: data?.signedUrl ?? null };
         }));
         const ids = withUrls.map(post => post.id);
@@ -80,7 +89,12 @@ export default function ClientApprovalsPage() {
       }
     }
     load();
-    return () => { active = false; };
+    return () => {
+      active = false;
+      document.removeEventListener("contextmenu", blockContextMenu);
+      document.removeEventListener("dragstart", blockDrag);
+      document.removeEventListener("keydown", blockSavePrint);
+    };
   }, [router]);
 
   const pendingCount = useMemo(() => posts.filter(post => post.status === "pending").length, [posts]);
@@ -119,7 +133,7 @@ export default function ClientApprovalsPage() {
     setBusyPost("");
   }
 
-  if (loading) return <main className="client-approvals-page"><p>Carregando aprovações...</p></main>;
+  if (loading) return <main className="client-approvals-page" onContextMenu={event => event.preventDefault()} onDragStart={event => event.preventDefault()}><p>Carregando aprovações...</p></main>;
   if (error) return <main className="client-approvals-page"><p className="client-approvals-error">{error}</p><Link href="/cliente">Voltar ao início</Link></main>;
 
   return <main className="client-approvals-page">
@@ -134,7 +148,7 @@ export default function ClientApprovalsPage() {
           <div className="client-approval-card-top"><span>{post.format || "CONTEÚDO"}</span><span className={post.status === "changes_requested" ? "is-changes" : ""}>{labels[post.status]}</span></div>
           <h2>{post.title}</h2>
           <p className="client-approval-date">{post.scheduled_for ? "DATA PREVISTA · " + new Date(post.scheduled_for + "T12:00:00").toLocaleDateString("pt-BR") : "SEM DATA PREVISTA"}</p>
-          {post.media_url ? (post.media_type?.startsWith("video/") ? <video className="client-approval-media" src={post.media_url} controls playsInline /> : <img className="client-approval-media" src={post.media_url} alt={post.media_name || post.title} />) : <div className="client-approval-no-media">A equipe ainda não anexou uma foto ou vídeo.</div>}
+          {post.media_url ? (post.media_type?.startsWith("video/") ? <video className="client-approval-media" src={post.media_url} controls playsInline controlsList="nodownload noplaybackrate" disablePictureInPicture disableRemotePlayback /> : <img className="client-approval-media" src={post.media_url} alt={post.media_name || post.title} draggable={false} />) : <div className="client-approval-no-media">A equipe ainda não anexou uma foto ou vídeo.</div>}
           {post.caption && <div className="client-approval-caption"><h3>Legenda / texto da publicação</h3><p>{post.caption}</p></div>}
           <div className="client-approval-comments"><h3>Conversa sobre esta publicação</h3>
             {comments.filter(comment => comment.post_id === post.id).map(comment => <div className="client-approval-comment" key={comment.id}><p>{comment.body}</p><small>{comment.created_at ? new Date(comment.created_at).toLocaleString("pt-BR") : ""}</small></div>)}
