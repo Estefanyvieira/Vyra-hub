@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     return response("A empresa selecionada é inválida.", 400);
   }
 
-  const { data: client, error: clientError } = await adminClient
+  const { data: client, error: clientError } = await userClient
     .from("clients")
     .select("id")
     .eq("id", clientId)
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
 
   if (clientError || !client) return response("A empresa selecionada não foi encontrada.", 404);
 
-  const { count, error: countError } = await adminClient
+  const { count, error: countError } = await userClient
     .from("profiles")
     .select("id", { count: "exact", head: true })
     .eq("client_id", clientId)
@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
     return response(createError?.message || "Não foi possível criar o acesso.", 400);
   }
 
-  const { error: profileError } = await adminClient.from("profiles").insert({
+  const { error: profileError } = await userClient.from("profiles").insert({
     id: created.user.id,
     full_name: fullName,
     role: "client",
