@@ -1,2 +1,104 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-:root{color-scheme:dark;--bg:#09090d;--panel:#15141c;--line:#302a39;--purple:#b98bf2;--muted:#a49bad}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f8f5fb;font-family:'DM Sans',sans-serif}.shell{min-height:100vh;padding:10vh max(8vw,24px);background:radial-gradient(ellipse at 75% 30%,#281b36 0,transparent 45%)}.brand{font:700 36px 'Space Grotesk';letter-spacing:.16em}.brand span{color:var(--purple)}.brand.small{font-size:24px}.eyebrow{font-size:10px;letter-spacing:.25em;color:var(--purple);margin:8px 0 30px}.shell h1{font:700 clamp(42px,8vw,82px) 'Space Grotesk';line-height:1.04;margin:70px 0 18px}.shell h1 em{color:var(--purple);font-style:normal}.lead,.muted{color:var(--muted);line-height:1.7}.button{display:inline-flex;align-items:center;justify-content:center;background:var(--purple);color:#160d20;padding:12px 18px;border:0;border-radius:8px;font-weight:700;text-decoration:none;cursor:pointer}.shell footer{margin-top:100px;color:#81778b;font-size:10px;letter-spacing:.2em}.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 15%,#2c1c3b,transparent 55%)}.auth-card{width:min(100%,430px);padding:34px;background:var(--panel);border:1px solid var(--line);border-radius:16px}.auth-card h1,.app-shell h1{font:700 34px 'Space Grotesk';margin:8px 0}.auth-card .eyebrow{margin:12px 0}.auth-card form{display:grid;gap:10px;margin-top:26px}.auth-card label{font-size:12px;color:#c9bfce}.auth-card input,.inline-form input,.post-card textarea{background:#211d29;border:1px solid #45394f;color:white;border-radius:8px;padding:12px;width:100%;font:inherit}.full{width:100%;margin-top:10px}.hint{font-size:11px;color:var(--muted);line-height:1.6;margin-top:20px}.error,.notice{color:#ffb6b6;background:#3b2028;padding:12px;border-radius:8px;font-size:13px}.app-shell{max-width:1100px;margin:auto;padding:30px 24px}.topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:45px}.topbar .eyebrow{margin:4px 0}.ghost{background:transparent;border:1px solid #51445c;color:#e7ddec;border-radius:8px;padding:10px 14px;cursor:pointer}.section{margin-top:38px;padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.section h2{font:600 21px 'Space Grotesk';margin:0 0 12px}.inline-form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-top:18px}.client-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.client-card,.post-card{display:block;text-decoration:none;color:white;background:#1c1923;border:1px solid #393142;padding:17px;border-radius:10px}.client-card span,.client-card small{display:block;color:var(--muted);margin-top:9px;font-size:12px}.client-card small{color:var(--purple)}.post-card{margin:14px 0}.post-head{display:flex;justify-content:space-between;gap:12px}.pill{font-size:11px;color:var(--purple);background:#30243e;border-radius:20px;padding:5px 9px}.post-card p{font-size:13px;line-height:1.6}.actions{display:flex;gap:9px;margin:16px 0}.post-card textarea{min-height:75px;resize:vertical;margin:8px 0}.post-card .button{font-size:12px}@media(max-width:650px){.inline-form{grid-template-columns:1fr}.app-shell{padding:20px 15px}.section{padding:16px}.shell{padding-top:15vh}}
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=League+Spartan:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root{color-scheme:dark;--bg:#08080b;--panel:#131219;--panel-2:#191620;--line:#302a39;--purple:#b36cff;--purple-bright:#c58cff;--muted:#a49bad;--white:#f8f5fb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:'Montserrat',sans-serif}
+button,input,textarea{font:inherit}
+.shell{min-height:100vh;padding:10vh max(8vw,24px);background:radial-gradient(ellipse at 75% 30%,#281b36 0,transparent 45%)}
+.brand{font:700 36px 'League Spartan',sans-serif;letter-spacing:.16em}
+.brand span{color:var(--purple)}
+.brand.small{font-size:24px}
+.eyebrow{font:700 10px 'Montserrat',sans-serif;letter-spacing:.25em;color:var(--purple);margin:8px 0 30px}
+.shell h1{font:400 clamp(42px,8vw,82px) 'Anton',sans-serif;line-height:1.04;margin:70px 0 18px;letter-spacing:.015em}
+.shell h1 em{color:var(--purple);font-style:normal}
+.lead,.muted{color:var(--muted);line-height:1.7}
+.button{display:inline-flex;align-items:center;justify-content:center;background:var(--purple);color:#160d20;padding:12px 18px;border:0;border-radius:8px;font-weight:700;text-decoration:none;cursor:pointer}
+.shell footer{margin-top:100px;color:#81778b;font-size:10px;letter-spacing:.2em}
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 15%,#2c1c3b,transparent 55%)}
+.auth-card{width:min(100%,430px);padding:34px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+.auth-card h1,.app-shell h1{font:400 34px 'Anton',sans-serif;margin:8px 0;letter-spacing:.02em}
+.auth-card .eyebrow{margin:12px 0}
+.auth-card form{display:grid;gap:10px;margin-top:26px}
+.auth-card label{font-size:12px;color:#c9bfce}
+.auth-card input,.inline-form input,.post-card textarea{background:#211d29;border:1px solid #45394f;color:white;border-radius:8px;padding:12px;width:100%;font:inherit}
+.full{width:100%;margin-top:10px}
+.hint{font-size:11px;color:var(--muted);line-height:1.6;margin-top:20px}
+.error,.notice{color:#ffb6b6;background:#3b2028;padding:12px;border-radius:8px;font-size:13px}
+.app-shell{max-width:1100px;margin:auto;padding:30px 24px}
+.topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:45px}
+.topbar .eyebrow{margin:4px 0}
+.ghost{background:transparent;border:1px solid #51445c;color:#e7ddec;border-radius:8px;padding:10px 14px;cursor:pointer}
+.section{margin-top:38px;padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.section h2{font:700 21px 'League Spartan',sans-serif;margin:0 0 12px}
+.inline-form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-top:18px}
+.client-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.client-card,.post-card{display:block;text-decoration:none;color:white;background:#1c1923;border:1px solid #393142;padding:17px;border-radius:10px}
+.client-card span,.client-card small{display:block;color:var(--muted);margin-top:9px;font-size:12px}
+.client-card small{color:var(--purple)}
+.post-card{margin:14px 0}
+.post-head{display:flex;justify-content:space-between;gap:12px}
+.pill{font-size:11px;color:var(--purple);background:#30243e;border-radius:20px;padding:5px 9px}
+.post-card p{font-size:13px;line-height:1.6}
+.actions{display:flex;gap:9px;margin:16px 0}
+.post-card textarea{min-height:75px;resize:vertical;margin:8px 0}
+.post-card .button{font-size:12px}
+
+/* Identidade visual do painel administrativo VYRA */
+.vyra-dashboard{min-height:100vh;background:var(--bg);display:grid;grid-template-columns:252px minmax(0,1fr)}
+.vyra-sidebar{position:relative;min-height:100vh;padding:34px 22px 28px;background:#0d0c11;border-right:1px solid #25202d;display:flex;flex-direction:column}
+.vyra-wordmark{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font:400 34px 'Anton',sans-serif;letter-spacing:.11em;line-height:1}
+.vyra-wordmark span{color:var(--purple)}
+.vyra-mark{width:17px;height:17px;color:var(--purple);margin-left:1px}
+.sidebar-kicker{font:600 9px 'Montserrat',sans-serif;letter-spacing:.34em;color:#8f8499;margin:10px 0 30px 2px}
+.sidebar-rule{height:1px;background:#292330;margin-bottom:28px}
+.sidebar-label,.section-index{font:700 9px 'Montserrat',sans-serif;letter-spacing:.2em;color:#82778d}
+.dashboard-nav{display:grid;gap:7px;margin-top:16px}
+.nav-entry{min-height:46px;display:flex;align-items:center;gap:11px;padding:0 11px;border:1px solid transparent;border-radius:5px}
+.nav-entry.selected{background:linear-gradient(90deg,rgba(179,108,255,.15),rgba(179,108,255,.035));border-color:rgba(179,108,255,.22)}
+.nav-number{font:500 10px 'Montserrat',sans-serif;color:#776d81}
+.nav-name{font:600 12px 'League Spartan',sans-serif;letter-spacing:.025em}
+.nav-entry.selected .nav-name{color:#fff}
+.nav-entry.disabled .nav-name{color:#81798a}
+.nav-status{margin-left:auto;font:500 8px 'Montserrat',sans-serif;color:#746a7d}
+.nav-star{width:12px;height:12px;color:var(--purple);margin-left:auto}
+.sidebar-signature{margin-top:auto;display:flex;align-items:center;gap:11px;padding:16px 4px 0;border-top:1px solid #292330;color:#a69bad;font:600 8px/1.8 'Montserrat',sans-serif;letter-spacing:.16em}
+.signature-star{width:22px;height:22px;color:var(--purple)}
+.dashboard-main{min-width:0;background:radial-gradient(ellipse at 80% 18%,rgba(77,39,107,.18),transparent 37%),#09080d}
+.dashboard-topbar{height:78px;padding:0 clamp(24px,5vw,70px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #24202b}
+.breadcrumb{font:600 9px 'Montserrat',sans-serif;letter-spacing:.19em;color:#a69bad}
+.breadcrumb span{color:#fff}.breadcrumb i{font-style:normal;color:var(--purple);padding:0 10px}
+.dashboard-logout{background:none;border:0;color:#a99fb1;font:600 10px 'Montserrat',sans-serif;cursor:pointer;letter-spacing:.04em}
+.dashboard-logout span{color:var(--purple);padding-left:7px}
+.dashboard-content{max-width:1160px;margin:0 auto;padding:58px clamp(24px,5vw,70px) 28px}
+.dashboard-overline{display:flex;align-items:center;gap:9px;color:#b9a9c5;font:700 9px 'Montserrat',sans-serif;letter-spacing:.2em}
+.dashboard-overline span{color:var(--purple)}
+.overline-star{width:13px;height:13px;color:var(--purple)}
+.dashboard-hero{position:relative;min-height:320px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;padding:42px 0 48px;border-bottom:1px solid #2a2431}
+.hero-pretitle{font:700 9px 'Montserrat',sans-serif;letter-spacing:.22em;color:#a89bb3;margin:0 0 18px}
+.dashboard-hero h1{font:400 clamp(40px,5vw,67px)/.99 'Anton',sans-serif;letter-spacing:.015em;margin:0;color:#fff}
+.dashboard-hero h1 em{font-style:normal;color:var(--purple-bright)}
+.hero-description{max-width:500px;color:#a99fb1;font:400 12px/1.9 'Montserrat',sans-serif;margin:22px 0 0}
+.hero-symbol-wrap{position:relative;width:230px;height:230px;flex:0 0 230px;margin:0 4% 0 20px;display:grid;place-items:center}
+.hero-orbit{position:absolute;border:1px solid rgba(179,108,255,.24);border-radius:50%;transform:rotate(-28deg)}
+.orbit-one{width:190px;height:190px}.orbit-two{width:230px;height:105px;border-color:rgba(179,108,255,.15);transform:rotate(48deg)}
+.hero-star{width:100px;height:100px;color:var(--purple);filter:drop-shadow(0 0 22px rgba(179,108,255,.35))}
+.dashboard-section-heading{display:flex;align-items:end;justify-content:space-between;margin:37px 0 17px}
+.section-index{margin:0 0 9px;color:var(--purple)}
+.dashboard-section-heading h2{font:700 23px 'League Spartan',sans-serif;margin:0;letter-spacing:-.02em}
+.dashboard-section-heading h2 span{color:var(--purple)}
+.section-caption{font:600 8px 'Montserrat',sans-serif;letter-spacing:.18em;color:#746b7c}
+.dashboard-feature{position:relative;display:flex;align-items:center;gap:22px;padding:27px 30px;background:linear-gradient(110deg,#17131e,#100e15 72%);border:1px solid #34283f;border-radius:7px;overflow:hidden}
+.dashboard-feature:after{content:"";position:absolute;width:210px;height:210px;border:1px solid rgba(179,108,255,.12);border-radius:50%;right:-90px;top:-110px;box-shadow:0 0 0 24px rgba(179,108,255,.025),0 0 0 48px rgba(179,108,255,.02)}
+.feature-symbol{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;background:rgba(179,108,255,.1);border:1px solid rgba(179,108,255,.24);border-radius:50%;color:var(--purple)}
+.feature-symbol svg{width:19px;height:19px}
+.feature-copy{max-width:650px;position:relative;z-index:1}
+.feature-tag{font:700 8px 'Montserrat',sans-serif;letter-spacing:.2em;color:var(--purple)}
+.feature-copy h3{font:700 19px 'League Spartan',sans-serif;margin:8px 0}
+.feature-copy p{font:400 11px/1.8 'Montserrat',sans-serif;color:#a69bad;margin:0}
+.feature-index{position:relative;z-index:1;margin-left:auto;text-align:right;font:700 8px/1.7 'Montserrat',sans-serif;letter-spacing:.18em;color:#796c86}
+.feature-index strong{font:400 30px 'Anton',sans-serif;color:#c28bff;letter-spacing:.04em}
+.dashboard-footer{display:flex;justify-content:space-between;gap:15px;margin-top:55px;padding-top:17px;border-top:1px solid #24202b;color:#71687b;font:600 8px 'Montserrat',sans-serif;letter-spacing:.16em}
+.dashboard-footer b{color:#b98bf2;font-weight:700}
+@media(max-width:900px){.vyra-dashboard{grid-template-columns:205px minmax(0,1fr)}.vyra-sidebar{padding:28px 16px}.hero-symbol-wrap{width:150px;height:150px;flex-basis:150px;margin-left:8px}.orbit-one{width:130px;height:130px}.orbit-two{width:160px;height:75px}.hero-star{width:70px;height:70px}}
+@media(max-width:680px){.vyra-dashboard{display:block}.vyra-sidebar{min-height:0;padding:20px 18px 14px;border-right:0;border-bottom:1px solid #25202d}.vyra-wordmark{font-size:27px}.sidebar-kicker{margin:7px 0 0}.sidebar-rule,.sidebar-label,.dashboard-nav,.sidebar-signature{display:none}.dashboard-topbar{height:60px;padding:0 18px}.dashboard-content{padding:36px 18px 24px}.dashboard-hero{min-height:0;padding:30px 0 34px}.dashboard-hero h1{font-size:clamp(37px,10vw,55px)}.hero-symbol-wrap{width:75px;height:75px;flex-basis:75px;margin-left:5px}.orbit-one{width:68px;height:68px}.orbit-two{width:85px;height:38px}.hero-star{width:37px;height:37px}.hero-description{font-size:11px}.dashboard-section-heading{margin-top:29px}.section-caption{display:none}.dashboard-feature{padding:20px 17px;gap:13px}.feature-index{display:none}.feature-copy h3{font-size:17px}.dashboard-footer{font-size:7px;letter-spacing:.1em}}
+@media(max-width:390px){.dashboard-hero{display:block}.hero-symbol-wrap{position:absolute;right:0;top:15px;opacity:.5}.dashboard-hero h1{font-size:40px}.dashboard-footer{flex-direction:column}}
