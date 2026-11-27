@@ -24,6 +24,19 @@ export default function ClientHomePage() {
   const [uploadFeedback, setUploadFeedback] = useState("");
 
   useEffect(() => {
+    const updateWelcome = () => {
+      const content = document.querySelector(".client-home-content");
+      if (!content) return;
+      const progress = Math.min(1, Math.max(0, window.scrollY / 420));
+      content.style.setProperty("--welcome-progress", progress.toFixed(3));
+    };
+
+    updateWelcome();
+    window.addEventListener("scroll", updateWelcome, { passive: true });
+    return () => window.removeEventListener("scroll", updateWelcome);
+  }, []);
+
+  useEffect(() => {
     let active = true;
 
     async function loadClientSpace() {
