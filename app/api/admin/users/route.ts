@@ -47,6 +47,7 @@ export async function GET(request: NextRequest) {
       id: profile.id,
       full_name: profile.full_name || "Nome não informado",
       email: data.user?.email || "E-mail indisponível",
+      active: !data.user?.banned_until || Date.parse(data.user.banned_until) <= Date.now(),
       created_at: profile.created_at,
     };
   }));
