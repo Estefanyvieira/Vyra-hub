@@ -190,12 +190,12 @@ export default function ClientHomePage() {
     >
       <div className="client-home-content">
         <section className="client-welcome-panel">
+          <div className="client-welcome-mark" aria-hidden="true">{logoUrl ? <img src={logoUrl} alt="" /> : <span>{client?.name?.slice(0, 1).toUpperCase()}</span>}</div>
           <div className="client-welcome-copy">
             <p className="client-home-kicker">SEU ESPAÇO · SUA MARCA</p>
             <h1>Bem-vindo(a),<br /><em>{client?.name}.</em></h1>
             <p>{client?.welcome_message || "Este é o espaço exclusivo da sua empresa. Aqui você acompanha conteúdos, projetos, aprovações e materiais desenvolvidos para sua marca."}</p>
           </div>
-          <div className="client-welcome-mark" aria-hidden="true">{logoUrl ? <img src={logoUrl} alt="" /> : <span>{client?.name?.slice(0, 1).toUpperCase()}</span>}</div>
         </section>
 
         <section className="client-home-section">
