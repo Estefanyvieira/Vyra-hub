@@ -480,3 +480,41 @@ button,input,textarea{font:inherit}
 .client-approvals-page img,.client-approvals-page video{-webkit-user-drag:none;user-select:none}
 .client-approvals-page .client-approval-media{pointer-events:auto}
 @media print{.client-approvals-page{display:none!important}}
+
+
+/* Central administrativa de aprovações */
+.approval-admin-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0}
+.approval-admin-summary>div{padding:17px 19px;background:#15121a;border:1px solid #302838;border-radius:6px;display:grid;gap:6px}
+.approval-admin-summary strong{font:400 29px 'Anton',sans-serif;color:#fff}
+.approval-admin-summary span{font:700 8px 'Montserrat',sans-serif;letter-spacing:.15em;color:#a99fb1}
+.approval-admin-filters{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 18px}
+.approval-admin-filter{display:flex;align-items:center;gap:9px;padding:10px 13px;background:#15121a;border:1px solid #34283f;border-radius:5px;color:#bdb2c7;font:700 9px 'Montserrat',sans-serif;cursor:pointer}
+.approval-admin-filter.active{background:rgba(179,108,255,.15);border-color:var(--purple);color:#fff}
+.approval-admin-filter span{color:var(--purple-bright)}
+.approval-admin-list{display:grid;gap:16px}
+.approval-admin-card{padding:23px;background:linear-gradient(110deg,#17131e,#100e15 72%);border:1px solid #34283f;border-radius:7px}
+.approval-admin-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:17px}
+.approval-admin-client{font:700 8px 'Montserrat',sans-serif;letter-spacing:.17em;color:var(--purple);text-transform:uppercase}
+.approval-admin-card-head h2{font:700 22px 'League Spartan',sans-serif;margin:7px 0}
+.approval-admin-card-head p{font:400 10px 'Montserrat',sans-serif;color:#a69bad;margin:0}
+.approval-admin-status{flex:0 0 auto;padding:7px 10px;border:1px solid #554264;border-radius:30px;color:#d9b8f7;font:700 8px 'Montserrat',sans-serif}
+.approval-admin-status.status-approved{color:#9be0b2;border-color:#315c43}.approval-admin-status.status-changes_requested{color:#f0bd83;border-color:#654b31}.approval-admin-status.status-published{color:#c5a5fa;border-color:#594275}
+.approval-admin-media{display:block;width:100%;max-height:440px;object-fit:contain;background:#09080d;border-radius:5px}
+.approval-admin-no-media{padding:30px;text-align:center;background:#100e15;border:1px dashed #40334d;color:#a69bad;font:400 10px 'Montserrat',sans-serif}
+.approval-admin-caption{margin-top:18px;padding:16px;background:#100e15;border-left:2px solid var(--purple)}
+.approval-admin-caption h3,.approval-admin-conversation h3{font:700 11px 'League Spartan',sans-serif;margin:0 0 9px;color:#fff}
+.approval-admin-caption p{font:400 11px/1.8 'Montserrat',sans-serif;color:#c4bacb;white-space:pre-wrap;margin:0}
+.approval-admin-conversation{margin-top:20px;padding-top:17px;border-top:1px solid #302838}
+.approval-admin-no-comments{font:400 10px 'Montserrat',sans-serif;color:#82778d}
+.approval-admin-comment{padding:12px;margin:9px 0;background:#100e15;border:1px solid #302838;border-radius:5px}
+.approval-admin-comment strong{font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em;color:#c9a5f4}
+.approval-admin-comment p{font:400 11px/1.7 'Montserrat',sans-serif;color:#eee6f3;margin:7px 0}
+.approval-admin-comment small{font:400 8px 'Montserrat',sans-serif;color:#82778d}
+.approval-admin-conversation textarea{display:block;width:100%;margin:12px 0 8px;padding:12px;background:#211d29;border:1px solid #45394f;border-radius:6px;color:#fff;font:400 11px/1.7 'Montserrat',sans-serif;resize:vertical}
+.approval-admin-send,.approval-admin-actions button{padding:10px 13px;border:1px solid #5c456f;border-radius:5px;background:#211b29;color:#e8d9f4;font:700 8px 'Montserrat',sans-serif;letter-spacing:.06em;cursor:pointer}
+.approval-admin-send:disabled,.approval-admin-actions button:disabled{opacity:.5;cursor:wait}
+.approval-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid #302838}
+.approval-admin-actions .needs-change{border-color:#765637;color:#f0bd83}
+.approval-admin-actions .mark-published{background:var(--purple);border-color:var(--purple);color:#160d20}
+.approval-admin-actions .reset-pending{border-color:#51445c;color:#bdb2c7}
+@media(max-width:680px){.approval-admin-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.approval-admin-card{padding:16px}.approval-admin-card-head{display:grid}.approval-admin-status{justify-self:start}.approval-admin-actions button{flex:1 1 100%}}
