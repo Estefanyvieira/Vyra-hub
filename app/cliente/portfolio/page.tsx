@@ -23,7 +23,6 @@ export default function ClientPortfolioPage() {
     load();
     return () => { active = false; };
   }, []);
-  const message = encodeURIComponent("Olá, VYRA! Tenho interesse em conhecer melhor um dos serviços do Portfólio VYRA.");
   return (
     <main className="client-module-page">
       <div className="client-module-content">
@@ -40,7 +39,7 @@ export default function ClientPortfolioPage() {
                 <h2>{service.name}</h2>
                 <p>{service.description || "Uma solução VYRA pensada para fortalecer a presença da sua marca."}</p>
                 {service.price_label ? <strong className="client-service-price">{service.price_label}</strong> : service.price !== null ? <strong className="client-service-price">A partir de R$ {Number(service.price).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</strong> : <strong className="client-service-price">Consulte condições</strong>}
-                <a className="client-service-cta" href={`https://wa.me/?text=${message}`} target="_blank" rel="noreferrer">TENHO INTERESSE ↗</a>
+                <a className="client-service-cta" href={`https://wa.me/5541999927975?text=${encodeURIComponent(`Olá, VYRA! Tenho interesse no serviço ${service.name}. Gostaria de receber mais informações.`)}`} target="_blank" rel="noreferrer">TENHO INTERESSE ↗</a>
               </article>
             ))}
           </div>
