@@ -796,3 +796,14 @@ button,input,textarea{font:inherit}
   .client-briefing-step textarea{color:#111!important;overflow:visible;resize:none}
   @page{size:A4;margin:16mm}
 }
+
+.client-briefing-video-title,.client-briefing-stage-title{width:100%;padding:10px 12px;border-radius:4px;color:#f7f2f3;font:600 13px 'Montserrat',sans-serif}
+.client-briefing-video-title{margin:8px 0 12px;background:#171213;border:1px solid color-mix(in srgb,var(--client-accent) 35%,#30272a)}
+.client-briefing-stage-title{background:#30213e;border:0;border-left:4px solid #bd83ee;color:#e6cafa;font-weight:700}
+.briefing-log-diffs{display:grid;gap:10px;margin-top:12px}
+.briefing-log-diffs>div{padding:12px;background:#100e15;border:1px solid #302838;border-radius:5px}
+.briefing-log-diffs>div>strong{display:block;margin-bottom:9px;color:#d9b8f7;font:700 10px 'Montserrat',sans-serif}
+.briefing-log-diffs>div>div{display:grid;grid-template-columns:75px 1fr;gap:8px;padding:5px 0}
+.briefing-log-diffs small{color:#a99bad;font:700 7px 'Montserrat',sans-serif;letter-spacing:.1em}
+.briefing-log-diffs p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+@media print{.client-briefing-video-title,.client-briefing-stage-title{color:#111!important;background:#fff!important;border:0!important;padding:4px 0!important}}
