@@ -6,7 +6,7 @@ type Section={id:string;heading:string;scene:string;speech:string};type Video={i
 const normalize=(value:any):Content=>({videos:Array.isArray(value?.videos)?value.videos.map((v:any)=>({...v,sections:Array.isArray(v.sections)?v.sections:[]})):[]});
 
 function downloadBriefingPdf(briefing:Briefing,content:Content){
- const clean=(value:string)=>String(value||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^\\x20-\\x7E]/g," ").replace(/\\s+/g," ").trim();
+ const clean=(value:string)=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\x20-\x7E]/g," ").replace(/\s+/g," ").trim();
  const lines:{text:string;size:number;bold:boolean;gap:number}[]=[];
  lines.push({text:"VYRA HUB",size:10,bold:true,gap:18});
  lines.push({text:clean(briefing.title),size:20,bold:true,gap:8});
@@ -30,13 +30,13 @@ function downloadBriefingPdf(briefing:Briefing,content:Content){
  const fontRegular=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>");
  const fontBold=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>");
  const pageRefs:number[]=[];
- for(const pg of pages){let stream="";for(const row of pg){const [weight,size,ys,...rest]=row.split("|");const txt=rest.join("|").replace(/\\\\/g,"\\\\").replace(/\\(/g,"\\\\(").replace(/\\)/g,"\\\\)");stream+=`BT /${weight==="B"?"F2":"F1"} ${size} Tf 48 ${ys} Td (${txt}) Tj ET\\n`;}
- const contentObj=add(`<< /Length ${stream.length} >>\\nstream\\n${stream}endstream`);
+ for(const pg of pages){let stream="";for(const row of pg){const [weight,size,ys,...rest]=row.split("|");const txt=rest.join("|").replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)");stream+=`BT /${weight==="B"?"F2":"F1"} ${size} Tf 48 ${ys} Td (${txt}) Tj ET\n`;}
+ const contentObj=add(`<< /Length ${stream.length} >>\nstream\n${stream}endstream`);
  const pageObj=add(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 ${fontRegular} 0 R /F2 ${fontBold} 0 R >> >> /Contents ${contentObj} 0 R >>`);
  pageRefs.push(pageObj);
  }
  objects[pagesObj-1]=`<< /Type /Pages /Kids [${pageRefs.map(n=>n+" 0 R").join(" ")}] /Count ${pageRefs.length} >>`;
- let pdf="%PDF-1.4\\n";const offsets=[0];objects.forEach((obj,i)=>{offsets.push(pdf.length);pdf+=`${i+1} 0 obj\\n${obj}\\nendobj\\n`;});const xref=pdf.length;pdf+=`xref\\n0 ${objects.length+1}\\n0000000000 65535 f \\n`;for(let i=1;i<offsets.length;i++)pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \\n";pdf+=`trailer << /Size ${objects.length+1} /Root ${catalog} 0 R >>\\nstartxref\\n${xref}\\n%%EOF`;
+ let pdf="%PDF-1.4\n";const offsets=[0];objects.forEach((obj,i)=>{offsets.push(pdf.length);pdf+=`${i+1} 0 obj\n${obj}\nendobj\n`;});const xref=pdf.length;pdf+=`xref\n0 ${objects.length+1}\\n0000000000 65535 f \n`;for(let i=1;i<offsets.length;i++)pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";pdf+=`trailer << /Size ${objects.length+1} /Root ${catalog} 0 R >>\\nstartxref\n${xref}\n%%EOF`;
  const blob=new Blob([pdf],{type:"application/pdf"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=clean(briefing.title||"briefing").replace(/[^a-zA-Z0-9]+/g,"-").replace(/^-|-$/g,"")+".pdf";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 export default function ClientBriefingsPage(){
