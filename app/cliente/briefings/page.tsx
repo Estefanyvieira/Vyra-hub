@@ -1,7 +1,7 @@
 "use client";
 import { useEffect,useMemo,useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabaseBrowser } from "../../supabase";
+import { supabaseBrowser } from "../../../supabase";
 type Section={id:string;heading:string;scene:string;speech:string};type Video={id:string;title:string;sections:Section[]};type Content={videos:Video[]};type Briefing={id:string;title:string;content:Content;updated_at:string};
 const normalize=(value:any):Content=>({videos:Array.isArray(value?.videos)?value.videos.map((v:any)=>({...v,sections:Array.isArray(v.sections)?v.sections:[]})):[]});
 export default function ClientBriefingsPage(){
