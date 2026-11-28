@@ -91,7 +91,7 @@ export default function ClientUsersPage() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Não foi possível criar o usuário.");
       setName(""); setEmail(""); setPassword("");
-      setMessage("Acesso criado e vinculado à empresa com sucesso.");
+      setMessage("Usuário principal criado e vinculado à empresa com sucesso.");
       await loadUsers();
     } catch (err) { setError(err instanceof Error ? err.message : "Não foi possível criar o usuário."); }
     finally { setSaving(false); }
@@ -148,21 +148,21 @@ export default function ClientUsersPage() {
         <header className="dashboard-topbar"><div className="breadcrumb"><Link href="/clientes">CLIENTES</Link><i>/</i> USUÁRIOS</div><button className="dashboard-logout" onClick={signOut}>Sair da conta <span>↗</span></button></header>
         <div className="dashboard-content">
           <div className="dashboard-overline">✦ GESTÃO DE ACESSOS <span>·</span> VYRA HUB</div>
-          <div className="clients-page-heading"><div><p className="hero-pretitle">CONTROLE DE ACESSOS DA EMPRESA</p><h1>Gerenciar<br /><em>usuários.</em></h1><p className="hero-description">{company?.name || "Empresa"} · cada pessoa terá seu próprio login e acesso ao mesmo espaço da empresa.</p></div><div className="clients-total"><strong>{users.length}/6</strong><span>ACESSOS UTILIZADOS</span></div></div>
+          <div className="clients-page-heading"><div><p className="hero-pretitle">CONTROLE DO USUÁRIO PRINCIPAL</p><h1>Gerenciar<br /><em>acesso principal.</em></h1><p className="hero-description">{company?.name || "Empresa"} · cadastro e manutenção do único acesso principal da empresa. Os demais logins serão gerenciados pelo cliente principal.</p></div><div className="clients-total"><strong>{users.length}/1</strong><span>USUÁRIO PRINCIPAL</span></div></div>
 
           {error && <p className="error user-feedback">{error}</p>}
           {message && <p className="success-message user-feedback">{message}</p>}
 
-          <div className="dashboard-section-heading"><div><p className="section-index">01 — NOVO ACESSO</p><h2>Cadastrar usuário<span>.</span></h2></div></div>
+          <div className="dashboard-section-heading"><div><p className="section-index">01 — ACESSO PRINCIPAL</p><h2>Cadastrar usuário principal<span>.</span></h2></div></div>
           <form className="user-admin-form" onSubmit={createUser}>
             <label>Nome completo<input required maxLength={120} value={name} onChange={e=>setName(e.target.value)} placeholder="Nome da pessoa" /></label>
             <label>E-mail de acesso<input required type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="email@exemplo.com" /></label>
             <label>Senha inicial<input required type="password" minLength={8} maxLength={128} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Mínimo de 8 caracteres" /></label>
             <p className="user-form-note">A senha inicial será definida por você e entregue à pessoa com segurança. O usuário poderá usar a opção “Esqueci minha senha” para criar outra senha.</p>
-            <button className="button" disabled={saving || users.length >= 6}>{saving ? "Criando acesso..." : users.length >= 6 ? "Limite de 6 usuários atingido" : "Criar acesso"}</button>
+            <button className="button" disabled={saving || users.length >= 1}>{saving ? "Criando acesso..." : users.length >= 6 ? "Usuário principal já cadastrado" : "Criar acesso"}</button>
           </form>
 
-          <div className="dashboard-section-heading"><div><p className="section-index">02 — ACESSOS VINCULADOS</p><h2>Usuários da empresa<span>.</span></h2></div><span className="section-caption">{users.length} DE 6 VAGAS UTILIZADAS</span></div>
+          <div className="dashboard-section-heading"><div><p className="section-index">02 — CONTA PRINCIPAL</p><h2>Usuário principal da empresa<span>.</span></h2></div><span className="section-caption">{users.length} DE 1 CONTA PRINCIPAL</span></div>
           <div className="user-list">{users.map((user,index)=><div className="user-row user-row-manage" key={user.id}>
             <span className="user-index">{String(index+1).padStart(2,"0")}</span>
             <div><strong>{user.full_name}</strong><small>{user.email}</small></div>
@@ -189,7 +189,7 @@ export default function ClientUsersPage() {
             <div className="user-panel-actions"><button className="button" disabled={busyUser===resetting.id}>{busyUser===resetting.id ? "Salvando..." : "Redefinir senha"}</button><button type="button" className="user-action" onClick={()=>setResetting(null)}>Cancelar</button></div>
           </form>}
 
-          <p className="clients-note">O limite máximo é de 6 logins por empresa. Todos os usuários vinculados compartilham o mesmo espaço e os mesmos dados da empresa.</p>
+          <p className="clients-note">A administração da VYRA gerencia somente esta conta principal. Depois do primeiro acesso, o cliente principal poderá criar e administrar até 5 logins adicionais.</p>
           <Link className="button secondary-button" href={`/clientes/${params.id}`}>Voltar ao espaço da empresa</Link>
         </div>
       </section>
