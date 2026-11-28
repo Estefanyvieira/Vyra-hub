@@ -706,3 +706,23 @@ button,input,textarea{font:inherit}
 .finance-status{display:inline-block;font:700 7px 'Montserrat',sans-serif;letter-spacing:.14em}
 .finance-status.paid{color:#9bd6ad}.finance-status.pending{color:#e1c58b}.finance-status.overdue{color:#e69b91}
 @media(max-width:700px){.finance-admin-grid{grid-template-columns:1fr}.client-finance-summary{grid-template-columns:1fr}.client-finance-list article{align-items:flex-start;flex-direction:column}}
+
+
+/* Administração da identidade visual de cada cliente */
+.client-admin-preview{border-color:color-mix(in srgb,var(--client-accent) 35%,#302838)}
+.client-admin-preview h1{font:400 clamp(36px,5vw,58px)/1.02 'Anton',sans-serif;margin:8px 0;color:#fff}
+.client-admin-preview h1 em{font-style:normal;color:var(--client-accent)}
+.client-admin-logo{display:block;max-width:190px;max-height:110px;object-fit:contain;margin:0 0 22px}
+.client-admin-color{display:flex;align-items:center;gap:10px;margin-top:22px;color:#b8adbf;font:700 9px 'Montserrat',sans-serif;letter-spacing:.1em}
+.client-admin-color i{width:19px;height:19px;border:1px solid #fff3;border-radius:50%}
+.client-identity-form{max-width:760px}
+.client-identity-form textarea{width:100%;background:#211d29;border:1px solid #45394f;color:#fff;border-radius:7px;padding:13px;font:400 12px/1.7 'Montserrat',sans-serif;resize:vertical;text-transform:none;letter-spacing:normal}
+.client-color-picker{display:flex;align-items:center;gap:12px}
+.client-color-picker input[type=color]{width:58px;height:44px;padding:4px;background:#211d29;border:1px solid #45394f;border-radius:7px;cursor:pointer}
+.client-color-picker input:not([type=color]){max-width:150px}
+.client-logo-admin{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:20px;padding:20px 22px;background:#121018;border:1px solid #34283f;border-radius:7px}
+.client-logo-admin .section-index{margin:0 0 8px}
+.client-logo-admin p:not(.section-index){max-width:540px;margin:0;color:#a69bad;font:400 10px/1.7 'Montserrat',sans-serif}
+.logo-upload-control{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid #5c456f;border-radius:6px;color:#eadcf4;font:700 9px 'Montserrat',sans-serif;cursor:pointer}
+.logo-upload-control input{max-width:190px;color:#b8adbf;font:400 9px 'Montserrat',sans-serif}
+@media(max-width:600px){.client-logo-admin{align-items:flex-start;flex-direction:column}.logo-upload-control{max-width:100%;flex-wrap:wrap}.logo-upload-control input{max-width:100%}}
