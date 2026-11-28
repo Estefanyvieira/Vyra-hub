@@ -211,13 +211,13 @@ export default function ClientHomePage() {
               <span className="client-home-module-description">Acompanhe datas, publicações e conteúdos programados.</span>
               <span className="client-home-module-action">ACESSAR <b>↗</b></span>
             </a>
-            <div className="client-home-module">
+            <a className="client-home-module client-home-module-active" href="/cliente/briefings">
               <span className="client-home-module-number">02</span>
               <span className="client-home-module-icon">✳</span>
-              <strong>Briefing</strong>
-              <span className="client-home-module-description">Compartilhe informações e detalhes importantes da sua marca.</span>
-              <span className="client-home-module-status">EM PREPARAÇÃO</span>
-            </div>
+              <strong>Briefings</strong>
+              <span className="client-home-module-description">Consulte seus roteiros, edite cenas e falas e baixe os PDFs para as gravações.</span>
+              <span className="client-home-module-action">ACESSAR <b>↗</b></span>
+            </a>
             <a className="client-home-module client-home-module-active" href="/cliente/aprovacoes">
               <span className="client-home-module-number">03</span>
               <span className="client-home-module-icon">✓</span>
