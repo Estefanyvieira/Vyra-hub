@@ -232,7 +232,7 @@ export default function ClientWorkspacePreviewPage() {
             <span className="section-caption">VISUALIZAÇÃO ADMINISTRATIVA</span>
           </div>
           <div className="client-grid">
-            <div className="client-card"><strong>Briefing</strong><span>Informações importantes sobre a marca.</span><small>Em preparação</small></div>
+            <Link className="client-card" href={`/clientes/${client.id}/briefings`}><strong>Briefings</strong><span>Crie roteiros por vídeo, edite conteúdos e acompanhe as alterações dos clientes.</span><small>GERENCIAR BRIEFINGS ↗</small></Link>
             <div className="client-card"><strong>Calendário</strong><span>Planejamento dos conteúdos.</span><small>Em preparação</small></div>
             <div className="client-card"><strong>Aprovações</strong><span>Revisão e aprovação de conteúdos.</span><small>Em preparação</small></div>
             <div className="client-card"><strong>Arquivos</strong><span>Materiais e entregas da empresa.</span><small>Em preparação</small></div>
