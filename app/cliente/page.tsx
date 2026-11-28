@@ -22,6 +22,7 @@ export default function ClientHomePage() {
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadFeedback, setUploadFeedback] = useState("");
+  const [isPrimary, setIsPrimary] = useState(false);
 
   useEffect(() => {
     const updateWelcome = () => {
@@ -51,7 +52,7 @@ export default function ClientHomePage() {
 
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
-          .select("role, client_id")
+          .select("role, client_id, is_primary")
           .eq("id", authData.user.id)
           .single();
 
@@ -80,6 +81,7 @@ export default function ClientHomePage() {
 
         if (!active) return;
         setClient(company);
+        setIsPrimary(profile.is_primary === true);
 
         if (company.logo_url) {
           const { data: signed, error: signedError } = await supabase
@@ -248,6 +250,21 @@ export default function ClientHomePage() {
             </a>
           </div>
         </section>
+
+        {isPrimary && <section className="client-home-section">
+          <div className="client-home-section-heading">
+            <div><p className="client-home-kicker">ACESSO DA EQUIPE</p><h2>Quem pode acessar?</h2></div>
+          </div>
+          <div className="client-home-modules">
+            <a className="client-home-module client-home-module-active" href="/cliente/usuarios">
+              <span className="client-home-module-number">07</span>
+              <span className="client-home-module-icon">♙</span>
+              <strong>Gerenciar usuários</strong>
+              <span className="client-home-module-description">Crie e gerencie os acessos das pessoas da sua equipe.</span>
+              <span className="client-home-module-action">GERENCIAR <b>↗</b></span>
+            </a>
+          </div>
+        </section>}
 
         <section className="client-brand-settings">
           <div>
