@@ -726,3 +726,73 @@ button,input,textarea{font:inherit}
 .logo-upload-control{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid #5c456f;border-radius:6px;color:#eadcf4;font:700 9px 'Montserrat',sans-serif;cursor:pointer}
 .logo-upload-control input{max-width:190px;color:#b8adbf;font:400 9px 'Montserrat',sans-serif}
 @media(max-width:600px){.client-logo-admin{align-items:flex-start;flex-direction:column}.logo-upload-control{max-width:100%;flex-wrap:wrap}.logo-upload-control input{max-width:100%}}
+
+
+/* Briefings: editor administrativo, área do cliente e PDF */
+.briefing-admin-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:30px 0}
+.briefing-admin-head h1{font:400 clamp(38px,5vw,62px)/1 'Anton',sans-serif;margin:0;color:#fff}
+.briefing-admin-head h1 em{font-style:normal;color:var(--purple)}
+.briefing-admin-layout{display:grid;grid-template-columns:minmax(190px,260px) minmax(0,1fr);gap:18px;align-items:start}
+.briefing-list{display:grid;gap:8px;position:sticky;top:20px}
+.briefing-list-item{display:grid;gap:8px;text-align:left;padding:15px;background:#121018;border:1px solid #34283f;border-radius:6px;color:#fff;cursor:pointer}
+.briefing-list-item.active{border-color:var(--purple);background:#1b1424}
+.briefing-list-item strong{font:600 13px 'League Spartan',sans-serif}
+.briefing-list-item small{font:700 7px 'Montserrat',sans-serif;letter-spacing:.12em;color:#b99bd2}
+.briefing-editor{min-width:0;padding:22px;background:#100e15;border:1px solid #34283f;border-radius:7px}
+.briefing-editor-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.briefing-editor label{display:grid;gap:8px;color:#bdb2c7;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em}
+.briefing-editor input,.briefing-editor textarea{width:100%;padding:12px;background:#211d29;border:1px solid #45394f;border-radius:5px;color:#fff;font:400 12px/1.7 'Montserrat',sans-serif;letter-spacing:normal;text-transform:none}
+.briefing-editor-top>label{flex:1;min-width:220px}
+.briefing-toolbar,.briefing-videos-head,.briefing-video-title,.briefing-save-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.briefing-secondary,.briefing-danger{padding:10px 12px;border:1px solid #5c456f;border-radius:5px;background:#211b29;color:#e8d9f4;font:700 8px 'Montserrat',sans-serif;letter-spacing:.06em;cursor:pointer}
+.briefing-danger{border-color:#70414b;color:#edb2b9;background:#211418}
+.briefing-videos-head{justify-content:space-between;margin:30px 0 15px}
+.briefing-videos-head h2{font:600 21px 'League Spartan',sans-serif;margin:0}
+.briefing-video-editor{padding:18px;margin:14px 0;background:#15121c;border:1px solid #34283f;border-radius:6px}
+.briefing-video-title{margin-bottom:16px}
+.briefing-video-title>span{color:var(--purple);font:700 8px 'Montserrat',sans-serif;letter-spacing:.15em}
+.briefing-video-title input{flex:1;min-width:150px}
+.briefing-section-editor{display:grid;gap:12px;padding:15px;margin:12px 0;background:#100e15;border:1px solid #302838;border-radius:5px}
+.briefing-stage-label{padding:13px;background:#30213e;border-left:4px solid #bd83ee;color:#e6cafa!important}
+.briefing-scene-label{padding:13px;background:#17243a;border-left:4px solid #80a9e8;color:#c9dcfb!important}
+.briefing-speech-label{padding:13px;background:#172b20;border-left:4px solid #83c99a;color:#c9efd3!important}
+.briefing-log-panel{margin:20px 0;padding:18px;background:#191420;border:1px solid #765a8c;border-radius:5px}
+.briefing-log-panel h3{margin:0 0 12px;font:600 18px 'League Spartan',sans-serif}
+.briefing-log-panel article{padding:13px 0;border-top:1px solid #392d43}
+.briefing-log-panel p,.briefing-log-panel small{color:#bdb2c7;font:400 10px/1.7 'Montserrat',sans-serif}
+.briefing-log-panel pre{max-height:300px;overflow:auto;padding:10px;background:#0b090e;color:#d7c7e5;font-size:9px;white-space:pre-wrap}
+.briefing-empty{padding:28px;text-align:center;color:#a99bad;border:1px dashed #51415f;font:400 11px/1.8 'Montserrat',sans-serif}
+.briefing-save-actions{justify-content:flex-end;margin-top:22px}
+.client-briefing-layout{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:20px;align-items:start}
+.client-briefing-list{display:grid;gap:8px}
+.client-briefing-list button{padding:15px;text-align:left;background:#100d0e;border:1px solid #30272a;color:#eee;border-radius:5px;font:600 12px 'Montserrat',sans-serif;cursor:pointer}
+.client-briefing-list button.active{border-color:var(--client-accent);background:color-mix(in srgb,var(--client-accent) 13%,#100d0e)}
+.client-briefing-document{min-width:0;padding:clamp(16px,3vw,30px);background:#0d0a0b;border:1px solid color-mix(in srgb,var(--client-accent) 32%,#30272a)}
+.client-briefing-document-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid #30272a}
+.client-briefing-document-head span,.client-briefing-video-index{font:700 8px 'Montserrat',sans-serif;letter-spacing:.16em;color:var(--client-accent)}
+.client-briefing-document-head h2{margin:10px 0 0;font:400 clamp(25px,4vw,38px) 'DM Serif Display',Georgia,serif}
+.client-briefing-video{padding:22px 0;border-bottom:1px solid #30272a;break-inside:avoid}
+.client-briefing-video h3{margin:7px 0 20px;font:400 24px 'DM Serif Display',Georgia,serif}
+.client-briefing-step{display:grid;gap:12px;margin:15px 0;break-inside:avoid}
+.client-briefing-step h4{margin:0;padding:14px 16px;background:#30213e;border-left:4px solid #bd83ee;color:#e6cafa;font:700 15px 'Montserrat',sans-serif}
+.client-briefing-step label{display:grid;gap:8px;padding:14px;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em}
+.client-briefing-step textarea{width:100%;min-height:80px;padding:10px;border:1px solid transparent;border-radius:4px;color:#f6f2f8;font:400 12px/1.8 'Montserrat',sans-serif;resize:vertical;background:transparent;letter-spacing:normal}
+.client-briefing-step .briefing-scene-label{background:#17243a;border-left:4px solid #80a9e8;color:#c9dcfb}
+.client-briefing-step .briefing-speech-label{background:#172b20;border-left:4px solid #83c99a;color:#c9efd3}
+.briefing-client-save{display:flex;justify-content:flex-end;padding-top:22px}
+.briefing-client-save button{border:1px solid var(--client-accent);background:var(--client-accent);color:#171011;padding:13px 17px;cursor:pointer;font:700 8px 'Montserrat',sans-serif;letter-spacing:.1em}
+.briefing-client-save button:disabled{opacity:.5}
+.briefing-client-notice{padding:12px 14px;background:#172b20;color:#bfe7c9;font:500 10px 'Montserrat',sans-serif}
+.briefing-print-button{padding:12px 14px;border:1px solid var(--client-accent);cursor:pointer}
+@media(max-width:760px){.briefing-admin-layout,.client-briefing-layout{grid-template-columns:1fr}.briefing-list,.client-briefing-list{position:static;display:flex;overflow-x:auto}.briefing-list-item,.client-briefing-list button{min-width:180px}.briefing-admin-head{align-items:flex-start;flex-direction:column}.briefing-editor{padding:14px}}
+@media print{
+  body{background:#fff!important;color:#111!important}
+  .client-global-header,.client-platform-signature,.client-briefing-list,.briefing-print-button,.briefing-client-save,.client-module-intro,.client-module-kicker{display:none!important}
+  .client-brand-environment,.client-module-page,.client-module-content,.client-briefing-document{background:#fff!important;color:#111!important;border:0!important;box-shadow:none!important}
+  .client-module-page{padding:0!important;min-height:0!important}
+  .client-briefing-document{padding:0!important}
+  .client-briefing-document-head h2,.client-briefing-video h3{color:#111!important}
+  .client-briefing-step h4,.client-briefing-step label{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .client-briefing-step textarea{color:#111!important;overflow:visible;resize:none}
+  @page{size:A4;margin:16mm}
+}
